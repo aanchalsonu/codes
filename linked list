@@ -1,0 +1,184 @@
+//linked list 
+#include <stdio.h>
+#include <stdlib.h>
+struct node 
+{
+    int data;
+    struct node* link;//self referential structure
+};
+typedef struct node nd;
+nd * insert_rear(nd *);
+nd * insert_front(nd *);
+nd * delete_rear(nd *);
+nd * delete_front(nd *);
+void display(nd *);
+nd * insert_at_pos(nd *);
+nd * delete_at_pos(nd *);
+
+int main()
+{
+    nd * first = 0;
+    int ch;
+    while(1)
+    {
+        printf("\n1.Insert at rear\n2.Insert at front\n3.Delete at rear\n4.Delete at front\n5.Insert at position\n6.Delete at position\n7.Display\n8.Exit\nEnter your choice ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1 : first = insert_rear(first);
+                        break;
+            case 2 : first = insert_front(first);
+                        break;
+            case 3 : first = delete_rear(first);
+                        break;
+            case 4 : first = delete_front(first);
+                        break;
+            case 5 : first = insert_at_pos(first);
+                        break;
+            case 6 : first = delete_at_pos(first);
+                        break;
+            case 7 : display(first);
+                        break;
+            case 8 : exit(0);
+        }
+    }
+    return 0;
+}
+//module to insert a node at rear 
+nd * insert_rear(nd * f)
+{
+    nd * t , * last;
+    t = (nd *)malloc(sizeof(nd));
+    printf("\nEnter the element of the list ");
+    scanf("%d",&(t->data));
+    t->link =0;
+    if(f==0)
+    return t;
+    for(last = f; (last->link) != 0;last = last->link);
+    last->link = t;
+    return f;
+}
+//module to insert a node front 
+nd * insert_front(nd * f)
+{
+    nd * t;
+    t = (nd *)malloc(sizeof(nd));
+    printf("\nEnter the element of the list ");
+    scanf("%d",&(t->data));
+    t->link = f;
+    return t;
+}
+//module to delete a node at rear 
+nd * delete_rear(nd * f)
+{
+    nd * p, *c ;
+    if(f == 0)
+    {
+        printf("\nDeletion not posibile because no nodes are present ");
+        return f;
+    }
+    if(f->link == 0)
+    {
+        printf("\nFirst node of the list ");
+        printf("\nContents to be deleted are %d ",f->data);
+        free(f);
+        return 0;
+    }
+    for(p =0,c=f; c->link !=0 ;p=c,c=c->link);
+    p->link = 0;
+    printf("\nContents deleted are %d ",c->data);
+    free(c);
+    // *(cnt)--;
+    return f;
+}
+//module to delete a node at front friend
+nd * delete_front(nd * f)
+{
+    nd *t;
+    if(f == 0)
+    {
+        printf("\nDeletion not posibile because no nodes are present ");
+        return 0;
+    }
+    if(f->link == 0)
+    {
+        printf("\nFirst node of the list ");
+        printf("\nContents to be deleted are %d ",f->data);
+        free(f);
+        return 0;
+    }
+    t = f->link;
+    printf("\nContents of node are %d ",f->data);
+    free(f);
+    return t;
+}
+//module to print the information present in node 
+void display(nd * f)
+{
+    if(f==0)
+    {
+        printf("\nNo nodes present ");
+        return ;
+    }
+    // printf("\nNUmber of nodes are %d ",*(cnt));
+    printf("\nContents of Nodes are ");
+    for(;f !=0;f = f->link)
+    printf("\n%d",f->data);
+}
+//module to insert a node at particular position
+nd * insert_at_pos(nd * f)
+{
+    nd * t;
+    nd * p,*c ;
+    int pos,cnt=0;
+    for(t = f;t->link !=0;t = t->link,cnt++);
+    printf("\nEnter the position ");
+    scanf("%d",&pos);
+    if(pos > (cnt+1) || pos <1)
+    {
+        printf("\nNot a valid position ");
+        return f;
+    }
+    if(pos == 1)
+    {
+        f = insert_front(f);
+        return f;
+    }
+    if(pos == (cnt+1))
+    {
+        f = insert_rear(f);
+        return f;
+    }
+    pos--;
+    for(p=0,c = f; pos !=0 ;p=c,c=c->link,pos--);
+    p->link = insert_front(c);
+    return f;
+}
+//module to delete at position
+nd * delete_at_pos(nd *f)
+{
+    nd * t,*p,*c;
+    int pos,cnt=0;
+    for(t = f;t->link !=0;t = t->link,cnt++);
+    printf("\nEnter the position ");
+    scanf("%d",&pos);
+    if(pos > (cnt+1) || pos < 1)
+    {
+        printf("\nNot a valid position ");
+        return f;
+    }
+    if(pos == 1)
+    {
+        f = delete_front(f);
+        return f;
+    }
+    if(pos == (cnt+1))
+    {
+        f = delete_rear(f);
+        return f;
+    }
+    pos--;
+    for(p=0,c=f;pos !=0 ;p=c,c= c->link,pos--);
+    p->link = delete_front(c);
+    return f;
+}
