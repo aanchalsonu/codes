@@ -1,0 +1,115 @@
+//program to add polynomials using linked list 
+#include <stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int co;
+    int ex;
+    struct node * link;
+};
+typedef struct node * polypointer ;
+
+void insert_rear(polypointer *);
+polypointer padd(polypointer , polypointer );
+polypointer attach(int ,int ,polypointer *);
+int compare(int ,int );
+
+int main()
+{
+    polypointer a=0,b=0,c,rear;
+    a =  (polypointer)malloc(sizeof(*a));
+    rear = a;
+    int n;
+    
+    printf("\nENter number of terms in polynomial 1 and their coefficient and exponent ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    insert_rear(&rear);
+    rear = a;
+    a= a->link;
+    free(rear);
+    
+    b =  (polypointer)malloc(sizeof(*b));
+    rear = b;
+    printf("\nENter number of terms in polynomial 2 and their coefficient and exponent ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    insert_rear(&rear);
+    rear = b;
+    b= b->link;
+    free(rear);
+    
+    printf("\nThe sum is \n");
+    c  = padd(a,b);
+    for(;c->link !=NULL ;c=c->link)
+    {
+        printf("%d^%d ",c->co,c->ex);
+        printf("+ ");
+    }
+    printf("%d^%d ",c->co,c->ex);
+    return 0;
+}
+
+void insert_rear(polypointer *p)
+{
+    polypointer t;
+    t = (polypointer)malloc(sizeof(*t));
+    printf("\nEnter the element of the coefficient and exponent ");
+    scanf("%d%d",&(t->co),&(t->ex));
+    (*p)->link = t;
+    (*p) = t;
+}
+
+polypointer padd(polypointer a, polypointer b)
+{
+    polypointer temp,c,rear;
+    int sum;
+    c = (polypointer)malloc(sizeof(*c));
+    rear = c;
+    while(a && b)
+    switch(compare(a->ex,b->ex))
+    {
+        case -1 : attach(b->co,b->ex,&rear);
+                    b= b->link;
+                    break;   
+        case 0 : sum = a->co + b->co;
+                    attach(sum,a->ex,&rear);
+                    a=a->link;
+                    b= b->link;
+                    break;
+                    
+        case 1 : attach(a->co,a->ex,&rear);
+                    a =a->link;
+                    break;
+    }
+    for(;a;a=a->link)
+    attach(a->co,a->ex,&rear);
+    for(;b;b=b->link)
+    attach(b->co,b->ex,&rear);
+    rear->link = NULL;
+    temp = c ;
+    c=c->link;
+    free(temp);
+    return c;
+}
+
+polypointer attach(int co,int ex,polypointer *p)
+{
+    polypointer temp;
+    temp = (polypointer)malloc(sizeof(*temp));
+    temp->co = co;
+    temp->ex = ex;
+    (*p)->link = temp;
+    (*p) = temp;
+}
+
+int compare(int ex1,int ex2)
+{
+    if(ex1 == ex2)
+    return 0;
+    if(ex1 <ex2)
+    return -1;
+    if(ex1 > ex2)
+    return 1;
+}
+
