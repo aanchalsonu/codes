@@ -1,0 +1,133 @@
+//program to evaluate polynomail and find sum of two polynomails  
+#include <stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+struct term 
+{
+    int cf,ex,ey,ez;
+    struct term * link;
+};
+typedef struct term tm;
+void i_f(tm *);
+void display(const tm *);
+void eval(const tm *);
+void polyadd(const tm * ,const tm *, tm * );
+
+int main()
+{
+    int n;
+    tm p1 = {.link = &p1};
+    tm p2 = {.link = &p2};
+    tm p3 = {.link = &p3};
+    printf("\nEnter number of terms ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    i_f(&p1);
+    printf("\n-------1st polynomial -------\n");
+    display(&p1);
+    printf("\n------part a -------\n");
+    eval(&p1);
+    printf("\n-------Part b -------\n");
+    printf("\nEnter the number of terms in poly 2  ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    i_f(&p2);
+    printf("\n-------Sum of polynomials -------\n");
+    polyadd(&p1,&p2,&p3);
+    display(&p3);
+    
+    return 0;
+}
+
+void i_f(tm *h)
+{
+    tm *t = (tm *)malloc(sizeof(tm));
+    printf("\nEnter the coefficient, power of x , power of y, power of z ");
+    scanf("%d%d%d%d",&(t->cf),&(t->ex),&(t->ey),&(t->ez));
+    t->link = h->link;
+    h->link =t;
+    
+}
+
+void display(const tm *h)
+{
+    tm * t ;
+    if(h->link == h)
+    {
+        printf("\nNO nodes present ");
+        return;
+    }
+    printf("\n");
+    // for(t=h->link; t->link != h;t = t->link)
+    // printf("%dx^%d y^%d z^%d ",t->cf,t->ex,t->ey,t->ez);
+    for(t=h->link; t!=h ;t=t->link)
+    {
+        printf("%dx^%d y^%d z^%d ",t->cf,t->ex,t->ey,t->ez);
+        if((t->link) != h)
+        printf(" + ");
+        else 
+        printf(" \n ");
+    }
+    
+    
+}
+
+void eval(const tm *h)
+{
+    int x,y,z;
+    printf("\nEnter the value of x,y and z ");
+    scanf("%d%d%d",&x,&y,&z);
+    double sum =0;
+    tm * t;
+    for(t=h->link; t!= h;t=t->link)
+    sum = sum + t->cf * pow(x,t->ex)*pow(y,t->ey)*pow(z,t->ez);
+    printf("\nThe sum of the expression is %.0lf \n", sum);
+    
+}
+
+void polyadd(const tm * h1,const tm *h2, tm * h3)
+{
+    tm *t,*t1,*n;
+    #define li\
+    n->link = h3->link;\
+    h3->link = n;
+
+    for(t=h1->link; t!=h1;t=t->link)
+    {
+        for(t1=h2->link; t1!=h2;t1=t1->link)
+        {
+            if(t1->cf != -999 && (t->ex == t1->ex && t->ey == t1->ey && t->ez == t1->ez ))
+            {
+                n = (tm *)malloc(sizeof(tm));
+                *(n) = *(t1);
+                n->cf += t->cf;
+                t1->cf = -999;
+                // n->link = h3->link;
+                // h3->link = n;
+                li;
+                break;
+            }
+        }
+        if(t1 == h2)
+        {
+            n = (tm *)malloc(sizeof(tm));
+            *(n) = *(t);
+            // n->link = h3->link;
+            // h3->link = n;
+            li;
+        }
+    }
+    for(t1= h2->link ; t1!=h2; t1=t1->link)
+    {
+        if(t1->cf != -999)
+        {
+            n = (tm *)malloc(sizeof(tm));
+            *(n) = *(t1);
+            // n->link = h3->link;
+            // h3->link = n;
+            li;
+        }
+    }
+    
+}
