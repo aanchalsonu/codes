@@ -1,0 +1,79 @@
+//arrange names using Dll 
+#include<stdlib.h>
+#include <stdio.h>
+#include<string.h>
+
+struct name 
+{
+    struct name * llink;
+    char n[50];
+    struct name *rlink;
+};
+typedef struct name nm;
+
+void i_f(nm * );
+void display(const nm *);
+void arrange(nm *);
+
+int main()
+{
+    nm header = {.llink =0, .rlink =0};
+    int n;
+    printf("\nEnter the number of names you want to enter ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    i_f(&header);
+    arrange(&header);
+    display(&header);
+    return 0;
+}
+
+void i_f(nm * h)
+{
+    nm *t = malloc(sizeof(nm));
+    printf("\nEnter the name ");
+    scanf(" %[^\n]s",(t->n));
+    if(h->rlink == 0)
+    {
+        h->rlink = t;
+    }
+    else
+    {
+        (h->rlink)->llink = t;
+        t->rlink = h->rlink;
+        h->rlink = t;
+    }
+
+}
+
+void display(const nm * h)
+{
+    nm * t , *l;
+    if(h->rlink == 0)
+    {
+        printf("\nNo nodes present ");
+        return ;
+    }
+    for(t = h->rlink ; t != 0 ; t=t->rlink)
+    printf("\n%s",t->n);
+    
+}
+
+void arrange(nm * h)
+{
+    nm * t = malloc(sizeof(nm)) , *t1 = malloc(sizeof(nm)), *new = malloc(sizeof(nm));
+    for(t = h->rlink ; t!=0 ; t= t->rlink)
+    {
+        for(t1 = h->rlink ; t1 != 0 ; t1 = t1->rlink)
+        {
+            if(strcmp(t->n,t1->n) > 0)
+            {
+                strcpy(new->n, t->n);
+                strcpy(t->n,t1->n);
+                strcpy(t1->n,new->n);
+            }
+        }
+    }
+}
+
+
