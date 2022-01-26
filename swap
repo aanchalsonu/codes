@@ -1,0 +1,72 @@
+//swap two element using LL 
+#include<stdlib.h>
+#include<stdio.h>
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+struct Node  * insert_rear(struct Node * );
+void display(struct Node *);
+struct Node* pairWiseSwap(struct Node* head) 
+    {
+        // The task is to complete this method
+        struct Node *p=0,*c=head,*n=0;
+        int count =0;
+        if(c == 0 || c->next == 0)
+        return head;
+        while(c != 0 && count <2)
+        {
+            n = c->next;
+            c->next = p;
+            p=c;
+            c=n;
+            count++;
+        }
+        head->next = pairWiseSwap(n);
+        return p;
+    }
+    
+int main()
+{
+    struct Node * head =0;
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = insert_rear(head);
+    head = pairWiseSwap(head);
+    display(head);
+    return 0;
+}
+
+struct Node  * insert_rear(struct Node * f)
+{
+    struct Node * t , * last;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    printf("\nEnter the element of the list ");
+    scanf("%d",&(t->data));
+    t->next =0;
+    if(f==0)
+    return t;
+    for(last = f; (last->next) != 0;last = last->next);
+    last->next = t;
+    return f;
+}
+
+void display(struct Node * f)
+{
+    if(f==0)
+    {
+        printf("\nNo nodes present ");
+        return ;
+    }
+    // printf("\nNUmber of nodes are %d ",*(cnt));
+    printf("\nContents of Nodes are ");
+    for(;f !=0;f = f->next)
+    printf("\n%d",f->data);
+}
+
