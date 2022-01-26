@@ -1,0 +1,34 @@
+//Middle element in LL
+#include<stdlib.h>
+#include<stdio.h>
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+typedef struct node Node;
+
+int getMiddle(Node *head)
+    {
+        int co=0,m;
+        Node *c = head , *p =0;
+        for(c=head ; c!=0;c=c->next,co++ );
+        m = co/2;
+        if(m%2 != 0)
+        {
+            for(p=0,c=head; m >0 ;p=c, c=c->next, m-- );
+            return (p->data);
+        }
+        else
+        {
+            for(p=0,c=head; m >= 0 ; p=c,c=c->next, m-- );
+            return (p->data);
+        }
+        
+    }
+    
+int main()
+{
+    
+}
