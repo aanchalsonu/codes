@@ -1,0 +1,173 @@
+//Binary tree implimentation 
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    struct node * llink;
+    int d;
+    struct node *rlink;
+};
+typedef struct node nd;
+
+//Create functio to create a node in recursive manner for tree implimentation 
+nd * create(FILE *fp)
+{
+    nd *temp;
+    temp = (nd *)malloc(sizeof(nd));
+    int x;
+    printf("\n\t\t\tEnter the data and enter -1 if it is a leaf nood or last node ");
+    fscanf(fp,"%d",&x);
+    if(x == -1)
+    return 0;
+    temp->d = x;
+    printf("\n\t\t\tEnter left node data of %d ",x);
+    temp->llink = create(fp);
+    printf("\n\t\t\tEnter right node data of %d ",x);
+    temp->rlink = create(fp);
+    return temp;
+}
+
+//Level order traversal
+void levelorder(nd * rt)
+{
+    int  r=-1, f=0 ,i;
+    nd * c, *q[20]={0};
+    if(!rt)
+    {
+        printf("\n\t\t\tTree is empty");
+        return ;
+    }
+    q[++r] = rt;
+    for(;;)
+    {
+        c = q[f++];
+        if(c)
+        {
+            printf("\n\t\t\t\t%d",c->d);
+            if(c->llink)
+            q[++r] = c->llink;
+            if(c->rlink)
+            q[++r] = c->rlink;
+        }
+        else
+        break;
+    }
+}
+
+//Minimum function - to find Minimum of the right subtree to be replaced. 
+nd * minimum(nd * rt)
+{
+    nd * c = rt;
+    while(c->llink != 0)
+    c = c->llink;
+    return c;
+}
+
+//To delete a node from tree
+nd * delete(nd *rt, int k)
+{
+    if(rt == NULL)
+    return 0;
+    if(k < rt->d)
+    {
+        rt->llink = delete(rt->llink , k);
+        return rt;
+    }
+    else if(k > rt->d)
+    {
+        rt->rlink = delete(rt->rlink , k);
+        return rt;
+    }
+    else
+    {
+        nd *temp;
+        if(rt->llink == NULL)
+        {
+            //This codition is for the node which has only right child
+            temp = rt->rlink;
+            free(rt);
+            return temp;
+        }
+        else if(rt->rlink == NULL)
+        {
+            //This condition is for the node which has only left  node 
+            temp = rt->llink;
+            free(rt);
+            return temp;
+        }
+        else
+        {
+            //this condition means that there are two child nodes to the node which is to be deleted
+            nd * t = minimum(rt->rlink);
+            rt->d = t->d;
+            //to rearrannge the right part of subtree and delete key element
+            rt->rlink = delete(rt->rlink, t->d);
+        }
+        
+    }
+    return rt;
+}
+
+
+int main()
+{
+    int x,n, ch;
+    FILE * fp = fopen("btreedata.txt","r"); 
+    printf("\n\t\t\tBinary tree implimentation (Enter data according to binary tree order ) \n");
+    printf("\t\t\t------------------------------------------------------------------------\n");
+    nd * root=0;
+    root = create(fp);
+    printf("\n\t\t\tLevel order traversal of tree is as follows ");
+    levelorder(root);
+    while(1)
+    {
+        printf("\n\t\t\t1.Delete\n\t\t\t2.Levelorder display\n\t\t\t3.Exit\n\t\t\tEnter your choice ");
+        scanf("%d", &ch);
+        switch(ch)
+        {
+            case 1 : printf("\n\t\t\tEnter the data you want to delete ");
+                     scanf("%d", &x);
+                     delete(root, x);
+                     break;
+            case 2 : levelorder(root);
+                     break;
+            default : exit(0);
+        }
+        
+    }
+    return 0;
+}
+
+
+//Data file 
+80
+50
+40
+30
+-1
+-1
+35
+-1
+-1
+55
+53
+-1
+-1
+60
+-1
+-1
+120
+100
+90
+-1
+-1
+110
+-1
+-1
+150
+140
+-1
+-1
+160
+-1
+-1
