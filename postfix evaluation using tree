@@ -1,0 +1,177 @@
+//program to evaluate a potfix expression using tree
+/*First convert the given expression into postfix store it into stack and then use stack to create a binary tree of expreesion */
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+#include<ctype.h>
+struct node 
+{
+    struct node * llink;
+    char d;
+    struct node * rlink;
+};
+typedef struct node * nd;
+
+//Function f 
+int f(char c)
+{
+    switch(c)
+    {
+        case '+' : 
+        case '-' : return 2;
+        case '*' :
+        case '/' : return 4;
+        case '^' : 
+        case '$' : return 5;
+        case '(' : return 0;
+        case '#' : return -1;
+        default : return 8;
+    }
+}
+//function g
+int g(char c)
+{
+    switch(c)
+    {
+        case '+' : 
+        case '-' : return 1;
+        case '*' :
+        case '/' : return 3;
+        case '^' : 
+        case '$' : return 6;
+        case '(' : return 9;
+        case ')' : return 0;
+        default : return 7;
+    }
+}
+
+//inorder traversal
+void inorder(nd  r)
+{
+    if(r)
+    {
+        inorder(r->llink);
+        printf("%c",r->d);
+        inorder(r->rlink);
+    }
+    
+}
+//INorder evaluation of postfix expression using tree
+// void inordereval(nd r , nd st , int t)
+// {
+//     int op1,op2;
+//     if(r)
+//     {
+//         inordereval(r->llink, st , t);
+//         if(isdigit(r->d))
+//         {
+//             st[++t] = r;
+//         }
+//         else
+//         {
+//             op1 = st[t--]->d - '0';
+//             op2 = st[t--]->d - '0';
+//             st[++t] = compute(op2,op1,r->d);
+//         }
+//         inorder(r->rlink, st,t);
+//     }
+// }
+
+// nd  compute(int op1 , int op2 , char c)
+// {
+//     nd temp; 
+//     switch(c)
+//     {
+//         case '+' : 
+//         temp->d = char(op1->d +op2->d);
+//         return temp;
+//         case '-' : 
+//         temp = char(op1->d - op2->d);
+//         return temp;
+//         case '*' : 
+//         temp = char(op1->d * op2->d);
+//         return temp;
+//         case '/' : 
+//         temp =char(op1->d / op2->d);
+//         return temp;
+//         // case '^' : 
+//         // temp = char(op1->d*op2->d);
+//         // return temp;
+//         default : return 0;
+//     }
+    
+// }
+
+int eval(nd r)
+{
+    if(!r)
+    return 0;
+    if(!r->llink && !r->rlink)
+    return r->d - '0';
+    int lval = eval(r->llink);
+    int rval = eval(r->rlink);
+    if(r->d == '+')
+    return lval + rval;
+    if(r->d == '-')
+    return lval - rval;
+    if(r->d == '*')
+    return lval * rval;
+    if(r->d == '/' )
+    return lval / rval;
+}
+int main()
+{
+    nd  st[30];
+    char inf[30] , c , pf[30] , s[30] = {'#'};
+    int  i , t = 0 , j=0;
+    printf("\n\t\t\t\tEnter the infix fix expression ");
+    scanf("%s",inf);
+    printf("\n\t\t\t\t------------------------------\n");
+    for(i=0;i<strlen(inf); i++)
+    {
+        c = inf[i];
+        while(f(s[t]) > g(c))
+        {
+            pf[j++] = s[t--];
+        }
+        if(f(s[t]) != g(c))
+        s[++t] = c;
+        else
+        t--;
+    }
+    for(; s[t] != '#' ; )
+    pf[j++] = s[t--];
+    pf[j] = '\0';
+    printf("\n\t\t\t\tPostfix expressoin is %s \n", pf);
+    printf("\n\t\t\t\t--------------------------------\n");
+    t=-1;
+    for(i=0;i<strlen(pf); i++)
+    {
+        if(isdigit(pf[i]))
+        {
+            nd  temp ;
+            temp = (nd )malloc(sizeof(nd));
+            temp->d = pf[i];
+            temp->llink = temp->rlink =0;
+            st[++t] = temp;
+        }
+        else
+        {
+            nd  temp ;
+            temp = (nd )malloc(sizeof(nd));
+            temp->d = pf[i];
+            temp->rlink = st[t--];
+            temp->llink = st[t--];
+            st[++t] = temp; 
+        }
+    }
+    printf("\n\t\t\t\tThe tree represenatation using levelorder traversal is \n");
+    printf("\t\t\t\t");
+    inorder(st[t]);
+    printf("\n\t\t\t\tThe Result is %d\n", eval(st[t]));
+}
+
+
+
+
