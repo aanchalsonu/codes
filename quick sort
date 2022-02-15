@@ -1,0 +1,64 @@
+//program to implement quick sort 
+#include<stdio.h>
+#include<stdlib.h>
+//swap function
+void swap(int *a , int *b)
+{
+    int temp ;
+    temp = *(a);
+    *(a) = *(b);
+    *(b) = temp;
+}
+//partition function 
+int part(int a[] , int lb , int ub)
+{
+    int s , e, pivot ;
+    pivot = a[lb];
+    s = lb;
+    e = ub;
+    while(s < e)
+    {
+        while(a[s] <= pivot )
+        s++;
+        while(a[e] > pivot)
+        e--;
+        if(s<e)
+        swap(&a[s] , &a[e]);
+    }
+    swap(&a[lb] ,&a[e]);
+    return e;
+}
+//quicksort
+void quicksort(int * a , int lb, int ub)
+{
+    int loc;
+    if(lb < ub )
+    {
+        loc = part(a , lb, ub);
+        quicksort(a , lb , loc-1 );
+        quicksort(a, loc+1, ub);
+    }
+}
+
+
+
+int main()
+{
+    int a[20],lb,ub,n;
+    //start , end , lower bound , upper bound , and location 
+    /*pivot will point to starting element at first and start is a[0] , end is a[n-1] , lowerbound will point to start and upper bound 
+    to end.
+    loc is to store end from the partition function */
+    printf("\nEnter the value of n ");
+    scanf("%d", &n);
+    printf("\nEnter data ");
+    for(int i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    lb = 0;
+    ub = n-1;
+    quicksort(a,lb,ub);
+    printf("\nThe sorted array is as follows \n");
+    for(int i=0;i<n;i++)
+    printf("%d ", a[i]);
+    
+}
