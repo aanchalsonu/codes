@@ -1,0 +1,143 @@
+//Program to impliment binary search tree
+/* Binary search tree is the one where there is only one key element and the left node data part is always lesser than the root node and right node data part 
+is always greater then the root node */
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct employee
+{
+    int id;
+    char nm[50];
+    float sal;
+};
+typedef struct employee emp;
+
+struct node 
+{
+    struct node *llink;
+    emp obj;
+    struct node * rlink;
+};
+typedef struct node nd;
+
+nd * create(nd * );
+void itersearch(nd * );
+void recursearch(nd * ,char * );
+void display(nd *);
+
+int main()
+{
+    nd *root = 0;
+    int ch,i,n1;
+    char n[40];
+    // FILE * fp;
+    // fp = fopen("datalab10.txt","r");
+    for(;;)
+    {
+        printf("\n1.Insert a node\n2.Iterative search\n3.Recursive search\n4.Display\n5.Exit");
+        printf("\nEnter your choice ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: printf("\nEnter number of nodes ");
+                    scanf("%d",&n1);
+                    for(i=0;i<n1;i++)
+                    root = create(root);
+                    break;
+            case 2: itersearch(root);
+                    break;
+            case 3: printf("\nEnter the name for recursive search ");
+                    scanf("%s",n);
+                    recursearch(root,n);
+                    break;
+            case 4: display(root);
+                    break;
+            case 5:exit(0);
+        }
+    }
+    return 0;
+}
+
+nd * create(nd * r)
+{
+    nd * t,*c = r,*p=0;
+    t = (nd *)malloc(sizeof(nd));
+    printf("\nEnter the Id , Name and salary  ");
+    scanf("%d%s%f",&((t->obj).id) , (t->obj).nm , &((t->obj).sal));
+    t->llink = t->rlink = 0;
+    if(!c)//For 1st node 
+    return t;
+
+    while(c)
+    {
+        if(strcmp(t->obj.nm , c->obj.nm) == 0)
+        {
+            printf("\nRedundent data ");
+            return r;
+        }
+        p = c;
+        if(strcmp(t->obj.nm , c->obj.nm) <0)
+        c = c->llink;
+        else
+        c = c->rlink;
+    }
+    if(strcmp(t->obj.nm , p->obj.nm) < 0)
+    p->llink = t;
+    else
+    p->rlink = t;
+    return r;
+}
+
+void itersearch(nd * r)
+{
+    char n[40];
+    printf("\nEnter the Name to be searched ");
+    scanf("%s",n);
+    if(!r)
+    {
+        printf("\nNo nodes present ");
+        return ;
+    }
+    while(r)
+    {
+        if(strcmp(n, r->obj.nm) == 0)
+        {
+            printf("\nSearch sucessfull ");
+            return;
+        }
+        if(strcmp(n , r->obj.nm) < 0)
+        r = r->llink;
+        else
+        r = r->rlink;
+    }
+    printf("\nUncessfull Search ");
+}
+
+void recursearch(nd * r, char  *n)
+{
+    if(!r)
+    {
+        printf("\nUncessfull Search ");
+        return ;
+    }
+    if(strcmp(n,r->obj.nm) == 0)
+    {
+        printf("\nSucessfull Search ");
+        return ;
+    }
+    if(strcmp(n, r->obj.nm) < 0)
+    return recursearch(r->llink , n);
+    else
+    return recursearch(r->rlink , n);
+}
+
+void display(nd *r )
+{
+    if(r)
+    {
+        display(r->llink);
+        printf("\n%d %s %f ",r->obj.id , r->obj.nm , r->obj.sal);
+        display(r->rlink);
+    }
+}
+
