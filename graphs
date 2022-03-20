@@ -1,0 +1,121 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MV 25 // max vertexes
+struct node 
+{
+    int v;
+    struct node *link;
+};
+typedef struct node nd;
+short int visited[MV] = {0};
+short int qvisited[MV]= {0};
+
+nd **  create(nd ** ,int  );
+void display(nd **, int n );
+void dfs(nd ** , int );
+void bfs(nd ** , int  );
+int main()
+{
+    nd *a[MV] = {0};
+    int i,n;
+    printf("Enter the Number of vertices ");
+    scanf("%d",&n);
+    *(a) = create(a,n);
+    display(a, n);
+    printf("\n");
+    dfs(a, 0);
+    printf("\n");
+    bfs(a,0);
+    return 0;
+}
+
+
+nd **  create(nd ** a,int n)
+{
+    int non;// non - Number of nodes 
+    nd * r=0;
+   
+    for(int i=0;i<n;i++)
+    {
+        printf("\nEnter number of nodes ");
+        scanf("%d",&non);
+        if(non == 0)
+        *(a+i) = 0;
+        r=0;
+        for(int j=0;j<non;j++)
+        {
+            nd * t =malloc(sizeof(nd));
+            printf("\nEnter the vertex ");
+            scanf("%d",&(t->v));
+            t->link =0;
+            if(*(a+i) == 0)
+            *(a+i) = t;
+            else
+            r->link = t;
+            r=t;
+        }
+    }
+    return *a;
+}
+
+void display(nd ** a, int n)
+{
+    nd * t;
+    int i,j;
+    for(i=0,t=*(a+i); i<n;i++,t=*(a+i))
+    {
+        printf("\nvertex : %d ",i);
+        if(t == 0)
+        printf("\n0");
+        for(; t;t= t->link)
+        printf("\n%d ",t->v);
+    }
+}
+
+void dfs(nd ** a, int v)
+{
+    nd * t;
+    printf("%d ", v);
+    visited[v] = 1;
+    for(t = *(a+v);t ;t= t->link)
+    if(!visited[t->v])
+    dfs(a, t->v);
+}
+
+nd delete(nd * b, int *f)
+{
+    return b[*(f++)];
+}
+
+void bfs(nd ** a, int ve)
+{
+    nd q[MV], c;
+    int f=0, r= -1, i,vert = ve;
+    nd * t;
+    // for(int i=0;i<MV;i++)
+    // visited[i] = 0;
+    //First insertion 
+
+    printf("%d ",vert);
+    qvisited[vert] = 1;
+    
+    q[++r] = **(a+vert);
+    
+    while(r>=f)
+    {
+        c = delete(q,&f);
+        vert = c.v;
+        printf("%d ",vert);
+        qvisited[vert] = 1;
+        for(t=*(a+vert);t;t=t->link)
+        {
+            if(!visited[t->v])
+            {
+                printf("%d ",t->v);
+                visited[t->v] = 1;
+                q[++r] = *t;
+            }
+        }
+    }
+}
+
