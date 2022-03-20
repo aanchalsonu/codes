@@ -1,0 +1,73 @@
+//merge sort implementation 
+#include<stdlib.h>
+#include<stdio.h>
+void mer(int a[], int lb , int mid, int ub)
+{
+    int n1,n2;
+    n1 = mid-lb+1;
+    n2 = ub-mid;
+    int l[n1],m[n2];
+    for(int i = 0;i< n1;i++)
+    l[i] = a[lb+i];
+    for(int j=0;j<n2;j++)
+    m[j] = a[mid+1+j];
+    int i,j,k;
+    i=0;
+    j=0;
+    k=lb;
+    while(i < n1 && j < n2)
+    {
+        if(l[i] <= m[j])
+        {
+            a[k] = l[i];
+            i++;
+        }
+        else
+        {
+            a[k] = m[j];
+            j++;
+        }
+        k++;
+    }
+    while(i<n1)
+    {
+        a[k] = l[i];
+        i++;
+        k++;
+    }
+    while(j<n2)
+    {
+        a[k] = m[j];
+        j++;
+        k++;
+    }
+    
+}
+
+
+void mergesort(int a[] , int lb, int ub)
+{
+    int mid;
+    if(lb<ub)
+    {
+        mid = (lb+ub)/2;
+        mergesort(a,lb,mid);
+        mergesort(a,mid+1,ub);
+        mer(a,lb,mid,ub);
+    }
+}
+
+
+int main()
+{
+    int a[50]={0},n,i,lb,ub;
+    printf("\nEnter the size of array ");
+    scanf("%d",&n);
+    printf("\nEnter the elements ");
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    mergesort(a,0,n-1);
+    printf("\nSorted array is ");
+    for(i=0;i<n;i++)
+    printf("%d ",a[i]);
+}
