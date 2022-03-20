@@ -1,0 +1,44 @@
+//Insertion sort 
+#include <stdio.h>
+#include<stdlib.h>
+
+void sort(int *a , int n)
+{
+    int t,j,i;
+    for(i=0;i<n;i++)
+    {
+        t = a[i];
+        j = i-1;
+        while(j >= 0 && a[j] > t)
+        {
+            a[j+1]= a[j];
+            j--;
+        }
+        a[j+1] = t;
+    }
+}
+
+
+
+int main()
+{
+    /*here the given array is divided into two parts ie: one as sorted and other as unsorted part of the same array
+    at first let us assume that the 1st element of array is sorted. so a[0] is sorted and we have to check for the unsorted patr now 
+    let us take a variable called temp which will hold the current element to be sorted 
+    and j be the index ie : j = i-1; j is the index from where the elements are checked till zeroth index 
+    if any element is greater then temp then use a[j+1] = a[j] and keep shifting the numbers till its correct position is found 
+    once the condition becomes false come out of while lop and place the temp at its correct position */
+    
+    int a[10],i,n;
+    printf("\nEnter n value ");
+    scanf("%d",&n);
+    printf("\nEnter the elements ");
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    sort(a,n);
+    printf("\nThe sorted array is \n");
+    for(i=0;i<n;i++)
+    printf("%d ",a[i]);
+    return 0;
+}
+
