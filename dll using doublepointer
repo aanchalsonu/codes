@@ -1,0 +1,52 @@
+//program to impliment the double pointer concept on dll
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node 
+{
+    int d;
+    struct node *llink , *rlink;
+};
+typedef struct node nd;
+void display(nd * );
+void infront(nd ** );
+
+int main()
+{
+    nd * f = 0;
+    infront(&f);
+    infront(&f);
+    infront(&f);
+    infront(&f);
+    infront(&f);
+    display(f);
+    return 0;
+}
+
+void infront(nd ** r)
+{
+    nd * t = malloc(sizeof(nd));
+    printf("\nEnter the data ");
+    scanf("%d",&(t->d));
+    t->llink = t->rlink = 0;
+    if((*r) == 0)
+    {
+        (*r) = t;
+        return;
+    }
+    (*r)->llink = t;
+    t->rlink = *(r);
+    *(r) = t;
+}
+
+void display(nd *f )
+{
+    nd *t ;
+    if(f == 0)
+    {
+        printf("\nNO nodes ");
+        return ;
+    }
+    for(t = f; t!= 0;t = t->rlink)
+    printf("\n%d",t->d);
+}
