@@ -1,0 +1,75 @@
+/*
+Given a number of pages in N different books and M students. The books are arranged in ascending order of the number of pages. Every student
+is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum. 
+*/
+
+/* USe binary search where ispossible function tells wheather the particular mid value gievs us the possible solution , if it gives then move end and start pointers.
+initially s=0 and e=sum of all the pages in all the books.
+so the nrange for binary search is 0 to sum.
+now calculate mid and pass that mid value to ispossible function. which will return a boolean value. 
+True if solution exists and false if not
+Depending on the return value of ispossible function decide the positions of e and s.
+either e = mid-1;
+or s = mid+1;
+continue until S<=e
+
+
+Is possible function :
+Keep 2 variables called studentcount=1 and pagecount=0
+assisgn pages contigiously for each student such that it doesnt exceed mid value 
+if Mid value exceeds then start with the next student
+and increase the count of student
+if student count increases m then return false or if arr[i]> mid means if pages left to be assisgned are more then mid valu then return false
+If none of th econditions fail return true
+*/
+
+
+#include <bits/stdc++.h> 
+using namespace std;
+bool ispossible(vector<int> arr, int n, int m ,int mid)
+{
+    int count=1,i,sum=0;
+    for(i=0;i<n;i++)
+    {
+        if(sum+arr[i] <= mid)
+        {
+            sum += arr[i];
+        }
+        else
+        {
+            count++;
+            if(count >m || arr[i] >mid)
+            {
+                return false;
+            }
+            sum= arr[i];
+        }
+    }
+    return true;
+}
+int allocateBooks(vector<int> arr, int n, int m) {
+    // Write your code here.
+    int s=0;
+    int e,mid,i,sum=0,ans=0;
+    for(i=0;i<n;i++)
+    {
+        sum = sum + arr[i];
+    }
+    e = sum;
+    mid = s +(e-s)/2;
+
+    while(s<=e)
+    {
+        if(ispossible(arr,n,m,mid))
+        {
+            ans = mid;
+            e = mid-1;
+        }
+        else
+        {
+            s = mid+1;
+        }
+        mid = s +(e-s)/2;
+    }
+    return ans;
+}
