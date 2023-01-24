@@ -1,0 +1,54 @@
+/*
+You are given an array consisting of n integers which denote the position of a stall. You are also given an integer k which denotes the number 
+of aggressive cows. You are given the task of assigning stalls to k cows such that the minimum distance between any two of them is the maximum possible.
+The first line of input contains two space-separated integers n and k.
+The second line contains n space-separated integers denoting the position of the stalls.
+*/
+
+
+/*
+Use the same logic as book allocation but we need to find the maximum posssible distance so move towards right if ispossible function returns true
+*/
+bool ispossible(vector<int> &stalls, int k,int mid)
+{
+    int count=1,sum=0,i,lastposition;
+    lastposition = stalls[0];
+    for(i=0;i<stalls.size();i++)
+    {
+        if(stalls[i] - lastposition >= mid)
+        {
+            count++;
+            if(count == k)
+            return true;
+            lastposition= stalls[i];
+        }
+    }
+    return false;
+}
+
+int aggressiveCows(vector<int> &stalls, int k)
+{
+    int s,i,e,sum=0,ans=0,maxi=0,mid=0;
+    sort(stalls.begin(),stalls.end());
+    for(i=0;i<stalls.size();i++)
+    {
+        maxi = max(maxi,stalls[i]);
+    }
+    s=0;
+    e = maxi;
+    mid = s +(e-s)/2;
+    while(s<=e)
+    {
+        if(ispossible(stalls,k,mid))
+        {
+            ans = mid;
+            s = mid+1;
+           
+        }
+        else{
+             e = mid-1;
+        }
+        mid = s +(e-s)/2;
+    }
+    return ans;
+}
