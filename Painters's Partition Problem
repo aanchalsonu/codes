@@ -1,0 +1,62 @@
+/*
+We have to paint n boards of length {A1, A2…An}. There are k painters available and each takes 1 unit of time to paint 1 unit of the board. The problem is to find 
+the minimum time to get 
+this job was done under the constraints that any painter will only paint continuous sections of boards, say board {2, 3, 4} or only board {1} or nothing but not 
+board {2, 4, 5}.
+*/
+
+*/Same as book allocation*/
+
+
+#include "bits/stdc++.h"
+using namespace std;
+
+bool ispossible(vector<int> &boards, int k,int mid)
+{
+    int i,count=1,sum=0;
+    for(i=0;i<boards.size();i++)
+    {
+        if(sum+boards[i] <= mid)
+        {
+            sum += boards[i];
+        }
+        else
+        {
+            count++;
+            if(count > k || boards[i] > mid)
+            {
+                return false;
+            }
+            sum = boards[i];
+        }
+    }
+    return true;
+}
+int findLargestMinDistance(vector<int> &boards, int k)
+{
+    //    Write your code here.
+
+    int i,sum=0,e,s,mid,ans=0;
+    for(i=0;i<boards.size();i++)
+    {
+        sum += boards[i];
+    }
+    s=0;
+    e = sum;
+    mid = s +(e-s)/2;
+    while(s<=e)
+    {
+        if(ispossible(boards,k,mid))
+        {
+            ans= mid;
+            e = mid-1;
+        }
+        else
+        {
+            s= mid+1;
+        }
+        mid = s +(e-s)/2;
+    }
+    return ans;
+
+}
