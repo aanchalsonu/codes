@@ -1,0 +1,17 @@
+/* Analogy of cards*/
+
+
+for(i=1;i<n;i++) //Assuming first element is allready sorted
+{
+temp = arr[i];
+for(j=i-1;j>=0;j--) //Start comparision from one index less then the current i index 
+{
+if(arr[j]>temp) // if current j index is greater then move all elements to right one step
+{
+arr[j+1] = arr[j];
+}
+else // If evrything is allready is sorted
+break;
+}
+arr[j+1] = temp; // to place temp to its correct position 
+}
