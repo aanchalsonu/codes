@@ -1,0 +1,64 @@
+/* To calculate Sum of two arrays from right to left
+*/
+
+#include <bits/stdc++.h> 
+#include <bits/stdc++.h> 
+
+void reverse(vector<int>& a)
+{
+	int s=0,e = a.size()-1;
+	while(s<=e)
+	{
+		swap(a[s],a[e]);
+		s++;
+		e--;
+	}
+}
+
+
+vector<int> findArraySum(vector<int>&a, int n, vector<int>&b, int m) {
+	// Write your code here.
+	vector<int> ans;
+
+	int i,j,sum=0,carry=0,temp;
+	i=n-1;
+	j=m-1;
+	while(i>=0 && j>=0)
+	{
+		sum = a[i] + b[j] + carry;
+		carry = sum /10;
+		sum = sum %10;
+		ans.push_back(sum);
+		i--;
+		j--;
+	}
+
+	while(i>=0)
+	{
+		sum = a[i] + carry;
+		carry = sum /10;
+		sum = sum %10;
+		ans.push_back(sum);
+		i--;
+	}
+
+	while(j>=0)
+	{
+		sum =  b[j] + carry;
+		carry = sum /10;
+		sum = sum %10;
+		ans.push_back(sum);
+		j--;
+	}
+
+	while(carry !=0)
+	{
+		sum = carry;
+		carry = sum /10;
+		sum = sum %10;
+		ans.push_back(sum);
+	}
+	reverse(ans);
+	return ans;
+
+}
