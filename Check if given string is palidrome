@@ -1,0 +1,45 @@
+/*
+Check forvpalindrome  by ignoring spaces and newline consider only alphabets and numbers
+*/
+#include <bits/stdc++.h> 
+bool checkPalindrome(string s)
+{
+    int start=0;
+        int n=s.length();
+        int end=n-1;
+        int flagStart;
+        int flagEnd;
+ while(start<=end)
+  {
+     flagStart=0;
+     flagEnd=0;
+    if((s[start]>='a' && s[start] <= 'z')||(s[start] >= 'A' && s[start] <= 'Z')||
+    (s[start]>='0' && s[start] <= '9'))
+        flagStart=1;
+     else
+         start++;
+     
+     
+  if((s[end] >= 'a' && s[end] <= 'z') || (s[end] >='A' && s[end] <= 'Z') ||(s[end]>='0' && s[end] <= '9'))
+               flagEnd=1;
+     else
+         end--;
+       
+     if(flagStart==1 && flagEnd==1 )
+     { 
+         if(tolower(s[start])==tolower(s[end]))
+           {  
+               start++;
+               end--;
+           }
+           else
+              break;
+     } 
+     
+ }     
+     if(start>end)
+         return true;
+     else 
+         return false;
+     
+}
