@@ -1,0 +1,13 @@
+/*
+Remove all occurence of a substring that matches the particular part of a string */
+class Solution {
+public:
+    string removeOccurrences(string s, string part) {
+        while(s.length() > 0 && s.find(part) < s.length()) // Find the part from string s using find function and chcek wheather the index lies within the range and string 
+        length is greater than 0 the use erase function to remove that part from the string
+        {
+            s.erase(s.find(part),part.length());
+        }
+        return s;
+    }
+};
