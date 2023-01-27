@@ -1,0 +1,38 @@
+/*
+Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+Integers in each row are sorted in ascending from left to right.
+Integers in each column are sorted in ascending from top to bottom.
+ 
+ */
+ 
+ /* the main idea is to increase the row  index if element is lesser then target and to decrease the column index if the element is greater then target 
+ as given in question that the elements are sorted in ascending order in row wise and ascending order in column wise
+ 
+ There is no consideration of middle element because we are playing with only row and column indexes in order to find a element
+ 
+ */
+ 
+ 
+ class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int row = matrix.size();
+        int col = matrix[0].size();
+        int i,j,s,e;
+        s = 0;
+        e = col-1;
+        while(s<row && e>=0)
+        {
+            int t = matrix[s][e];
+            if(t == target)
+            return true;
+            else if(t <target)
+            s++;
+            else
+            e--;
+        }
+        return false;
+        
+    }
+};
