@@ -1,0 +1,36 @@
+/*
+Given an integer n, return the number of prime numbers that are strictly less than n.
+*/
+
+
+/*
+
+To reduce time complexity make a vector of size n+1 and mark everything as true initially (Assuming every integer from 0 to n is prime
+then consider from 2 and mark false all those numbers that comes in table of 2 
+this way half of the array size if reduced 
+continue this until i < n
+*/
+
+
+
+
+class Solution {
+public:
+    int countPrimes(int n) {
+        int cnt=0;
+        vector<bool> prime(n+1,true);
+        prime[0] = prime[1] = false;
+        for(int i=2;i<n;i++)
+        {
+            if(prime[i])
+            {
+                cnt++;
+                for(int j=2*i ;j<n;j= j+i)
+                {
+                    prime[j] = false;
+                }
+            }
+        }
+        return cnt;
+    }
+};
