@@ -1,0 +1,33 @@
+/******************************************************************************
+Recurisve Function to print string representation of digits of a given number n 
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+string arr[9] = {"one","two","three","four","five","six","seven","eight","nine"};
+std::vector<string> ans ;
+void printDigit(int n)
+{
+    if(n==0)
+    {
+        for(int i=ans.size();i>=0;i--)
+        {
+            cout<<ans[i]<<" ";
+        }
+        cout<<endl;
+        return;
+    }
+    
+    int r = n%10;
+    ans.push_back(arr[r-1]);
+    printDigit(n/10);
+    
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    printDigit(n);
+    return 0;
+}
