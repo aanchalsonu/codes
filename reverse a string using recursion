@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+
+void reverse(int i,int j,string& str) 
+{
+	//base case
+
+	if(i>j)
+	return ;
+
+	swap(str[i],str[j]);
+	i++;
+	j--;
+	reverse(i,j,str);
+}
+
+string reverseString(string str)
+{
+	// Write your code here.
+
+	reverse(0,str.length()-1,str);
+	return str;
+}
