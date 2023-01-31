@@ -1,0 +1,39 @@
+// Same as subset where output contains 2^n sets
+
+#include <bits/stdc++.h> 
+
+void solve(vector<string>& ans,string output,int index,string str)
+{
+	//base case
+	if(index >= str.length())
+	{
+		if(output.length() > 0)
+		{
+			ans.push_back(output);
+		}
+		return;
+	}
+
+	//exclude the part 
+
+	solve(ans,output,index+1,str);
+
+	//INclude the part
+	output.push_back(str[index]);
+	solve(ans,output,index+1,str);
+
+
+}
+
+
+vector<string> subsequences(string str){
+	
+	// Write your code here
+	string output = "";
+	vector<string> ans;
+	int index = 0;
+	solve(ans,output,index,str);
+	return ans;
+
+	
+}
