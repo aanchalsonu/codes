@@ -1,0 +1,42 @@
+/*
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+*/
+
+class Solution {
+public:
+
+    void solve(string digits,string output,int index,vector<string> & ans,string mapping[])
+    {
+        //base case: when string length (digits) is greater then return 
+        if(index >= digits.length())
+        {
+            ans.push_back(output);
+            return ;
+        }
+
+        int number = digits[index]-'0'; // convert the character into integer to be  used for mapping array 
+        string value = mapping[number]; // map the corresponding string for the digit using mapping array 
+
+        for(int i=0;i<value.length();i++) // value contains all the letters that can be used for that particlur digit
+        {
+            output.push_back(value[i]); //push that letter into the array output
+            solve(digits,output,index+1,ans,mapping); //solve for the next letter
+            output.pop_back(); // While backtracing pop out the previously entered letter
+        }
+
+    }
+
+    vector<string> letterCombinations(string digits) {
+        int index=0;
+        vector<string> ans;
+        if(digits.length() <=0)
+        return ans;
+        string output;
+        string mapping[10] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        solve(digits,output,index,ans,mapping);
+        return ans;
+    }
+};
