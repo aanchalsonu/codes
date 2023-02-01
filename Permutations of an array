@@ -1,0 +1,40 @@
+/*
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+Given a string or an array , arrange them in lexographical order 
+and return the order ie: possible permutations
+
+*/
+
+
+class Solution {
+public:
+    // function to solve the problem recursively
+    void solve(vector<int> nums, vector<vector<int>> & ans,int index)
+    {
+        //base case : if Index>nums.size() which means all the elements are checked and string came to an end
+        if(index >= nums.size())
+        {
+            ans.push_back(nums); // store result in ans and return
+            return ;
+        }
+
+        // Recursive case for one iteration : baake ka cases recursion sambhal lega
+        for(int j=index;j<nums.size();j++) // Run until nums.size()
+        {
+            swap(nums[index],nums[j]); // swap the current element with itself and the remaining elements one by one to find all possible permutations
+            solve(nums,ans,index+1); // kep solving and store result in ans
+            //back tracking : Taake phir sa normal string miljaaya
+            swap(nums[index],nums[j]); //for the next index swap ie : if "abc" then for all possible combinations starting with b.. get back the normal string 
+            so backtack and swap
+        }
+
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans; // to store answer
+        int index=0;
+        solve(nums,ans,index); // function call
+        return ans;
+
+    }
+};
