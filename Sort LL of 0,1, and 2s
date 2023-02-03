@@ -1,0 +1,107 @@
+/********************************
+    class Node
+    {
+    public:
+        int data;
+        Node *next;
+        Node(int data)
+        {
+            this->data = data;
+            this->next = NULL;
+        }
+    };
+
+********************************/
+
+// void insertAtTail(int d,Node * &temp)
+// {
+//     Node * t = temp;
+//     while(t->next != NULL)
+//     {
+//         t = t->next;
+//     }
+//     Node * newnode = new Node(d) ;
+//     t->next= newnode;
+
+// }
+
+
+Node* sortList(Node *head)
+{
+    // Write your code here.
+
+    int zc=0;
+    int oc=0;
+    int tc=0;
+
+    Node * temp = head;
+    while(temp != NULL)
+    {
+        if(temp->data == 0)
+        zc++;
+        else if(temp->data == 1)
+        oc++;
+        else
+        tc++;
+
+        temp = temp->next;
+    }
+
+    temp =head;
+    while(temp != NULL)
+    {
+        if(zc != 0)
+        {
+            temp->data = 0;
+            zc--;
+        }
+        else if(oc != 0)
+        {
+            temp->data = 1;
+            oc--;
+        }
+        else{
+            temp->data = 2;
+            tc--;
+        }
+
+        temp = temp->next;
+    }
+
+    return head;
+    // Node * temp1;
+    // if(zc>0)
+    // {
+    //     temp1 = new Node(0);
+    //     zc--;
+    // }
+    // else if(oc>0)
+    // {
+    //     temp1 = new Node(1);
+    //     oc--;
+    // }
+    // else
+    // {
+    //     temp1 = new Node(2);
+    //     tc--;
+    // }
+
+
+    // while(zc > 0)
+    // {
+    //     insertAtTail(0,temp1);
+    //     zc--;
+    // }
+    // while(oc>0)
+    // {
+    //     insertAtTail(1,temp1);
+    //     oc--;
+    // }
+    // while(tc>0)
+    // {
+    //     insertAtTail(2,temp1);
+    //     tc--;
+    // }
+
+    // return temp1;
+}
