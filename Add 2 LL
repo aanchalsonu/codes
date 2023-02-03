@@ -1,0 +1,194 @@
+/*
+Given two decimal numbers represented by two linked lists of size N and M respectively. The task is to return a linked list that represents the sum of these two
+numbers.
+
+For example, the number 190 will be represented by the linked list, 1->9->0->null, similarly 25 by 2->5->null. Sum of these two numbers is 190 + 25 = 215, 
+will be represented by 2->1->5->null. You are required to return the head of the linked list 2->1->5->null.
+
+
+*/
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+/* Linked list Node */
+struct Node {
+    int data;
+    struct Node* next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+struct Node* buildList(int size)
+{
+    int val;
+    cin>> val;
+    
+    Node* head = new Node(val);
+    Node* tail = head;
+    
+    for(int i=0; i<size-1; i++)
+    {
+        cin>> val;
+        tail->next = new Node(val);
+        tail = tail->next;
+    }
+    
+    return head;
+}
+
+void printList(Node* n)
+{
+    while(n)
+    {
+        cout<< n->data << " ";
+        n = n->next;
+    }
+    cout<< endl;
+}
+
+
+/* node for linked list:
+
+struct Node {
+    int data;
+    struct Node* next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+
+class Solution
+{
+    public:
+    
+    void InsertT(struct Node * &head,struct Node * &tail,int d)
+    {
+        struct Node * temp = new Node(d);
+        if(head == NULL)
+        {
+            head = temp;
+            tail = temp;
+            return ;
+            
+        }
+        else
+        {
+           tail->next = temp;
+           tail = temp;
+        }
+    }
+    
+    struct Node* reverse(struct Node * head)
+    {
+        struct Node* curr=head;
+        struct Node* next1=NULL;
+        struct Node* prev=NULL;
+        
+        while(curr != NULL)
+        {
+            next1 = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next1;
+        }
+        return prev;
+    }
+    
+    
+    struct Node* add(struct Node* first, struct Node* second)
+    {
+        struct Node* temp ;
+        int sum=0,carry=0,d=0;
+        
+        struct Node* ansHead = NULL;
+        struct Node* ansTail = NULL;
+        
+        while(first != NULL && second != NULL)
+        {
+            sum = carry + first->data + second->data;
+            d = sum%10;
+            carry = sum/10;
+            InsertT(ansHead,ansTail,d);
+            
+            first = first->next;
+            second  = second->next;
+            
+        }
+        
+        
+        while(first != NULL)
+        {
+            sum = carry + first->data;
+            d = sum%10;
+            carry = sum/10;
+            InsertT(ansHead,ansTail,d);
+            first = first->next;
+        }
+        
+        
+        while(second != NULL)
+        {
+            sum = carry + second->data;
+            d = sum%10;
+            carry = sum/10;
+            InsertT(ansHead,ansTail,d);
+            second= second->next;
+        }
+        
+        while(carry != 0)
+        {
+            sum = carry;
+            d = sum%10;
+            carry = sum/10;
+            InsertT(ansHead,ansTail,d);
+        }
+        
+        return ansHead;
+    }
+    
+    
+    //Function to add two numbers represented by linked list.
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        // code here
+        
+        first = reverse(first);
+        second = reverse(second);
+        struct Node* ans = add(first,second);
+        ans = reverse(ans);
+        return ans;
+        
+        
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, m;
+        
+        cin>>n;
+        Node* first = buildList(n);
+        
+        cin>>m;
+        Node* second = buildList(m);
+        Solution ob;
+        Node* res = ob.addTwoLists(first,second);
+        printList(res);
+    }
+    return 0;
+}
