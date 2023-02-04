@@ -1,0 +1,29 @@
+// from the given array create a new array where a[i] is equal to next smaller element from the rest of the array
+
+#include "bits/stdc++.h"
+vector<int> nextSmallerElement(vector<int> &arr, int n)
+{
+    // Write your code here.
+
+    vector<int> ans(n);
+    stack<int> s;
+    s.push(-1);
+
+    int i;
+    
+    for(i=n-1;i>=0;i--)
+    {
+        int curr = arr[i];
+        while(s.top() >= curr)
+        {
+            s.pop();
+        }
+        ans[i] = s.top();
+
+        s.push(curr);
+    }
+    return ans;
+
+
+
+}
