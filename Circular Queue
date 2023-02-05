@@ -1,0 +1,52 @@
+#include <bits/stdc++.h> 
+class CircularQueue{
+    public:
+    int * arr;
+    int size;
+    int f;
+    int r;
+
+    CircularQueue(int n){
+        size = n;
+        arr = new int[size];
+        f =-1;
+        r=-1;
+
+    }
+
+    // Enqueues 'X' into the queue. Returns true if it gets pushed into the stack, and false otherwise.
+    bool enqueue(int value){
+        if((r+1)%size == f)
+        {
+            return false;
+        }
+        if(f == -1)
+        {
+            f=r=0;
+        }
+        else
+        {
+            r = (r+1)%(size); 
+        }
+        arr[r] = value;
+        return true;
+    }
+
+    // Dequeues top element from queue. Returns -1 if the stack is empty, otherwise returns the popped element.
+    int dequeue(){
+        if(f==-1)
+        {
+            return -1;
+        }
+        int num = arr[f];
+        if(f == r)
+        {
+            f=-1;
+            r=-1;
+        }
+        else{
+            f = (f+1)%(size);  
+        }
+        return num;
+    }
+};
