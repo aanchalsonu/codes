@@ -1,0 +1,77 @@
+/*
+Design a stack to find minimum value from a stack with in O(1) space complexity and O(1) Time complexity 
+*/
+
+#include<bits/stdc++.h>
+class SpecialStack {
+    // Define the data members.
+
+    /*----------------- Public Functions of SpecialStack -----------------*/
+    public:
+    stack<int> s;
+    int mini = INT_MAX;
+    void push(int data) {
+        if(s.empty())
+        {
+            s.push(data);
+            mini = data;
+            return;
+        }
+        else
+        {
+            if(data < mini)
+            {
+                s.push(2*data-mini); // this formula is used to get the previous minimum element for the stack 
+                mini = data;
+            }
+            else
+            s.push(data);
+        }
+    }
+
+    int pop() {
+        if(s.empty())
+        {
+            return -1;
+        }
+
+        int curr = s.top();
+        s.pop();
+
+        if(curr > mini)
+        {
+            return curr;
+        }
+        else
+        {
+            int prevMini = mini;
+            int val = 2*mini-curr;
+            mini = val;
+            return prevMini;
+        }
+    }
+
+    int top() {
+        if(s.empty())
+        return -1;
+
+        int curr = s.top();
+        if(curr < mini)
+        {
+            return mini;
+        }
+        else
+        return curr;
+    }
+
+    bool isEmpty() {
+        return s.empty();
+    }
+
+    int getMin() {
+        if(s.empty())
+        return -1;
+
+        return mini;
+    }  
+};
