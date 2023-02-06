@@ -1,0 +1,67 @@
+// build a binary tree
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Node
+{
+    public:
+    int data;
+    Node * left;
+    Node * right;
+    Node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+Node * createTree(Node * root)
+{
+    cout<<"\nEnter the data ";
+    int x;
+    cin>>x;
+    
+    if(x == -1)
+    return NULL;
+    
+    root = new Node(x);
+    
+    //left child creation
+    cout<<"\nEnter left child data ";
+    root->left = createTree(root->left);
+    
+    
+    //right child creation
+    cout<<"\nEnter right child data ";
+    root->right = createTree(root->right);
+    
+    return root;
+}
+
+
+void inorder(Node* root)
+{
+    if(root == NULL)
+    return ;
+    
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
+    
+}
+
+
+int main()
+{
+    Node * root;
+    root = createTree(root);
+    inorder(root);
+    return 0;
+}
+
+
+//1 2 -1 -1 3 -1 -1
+
