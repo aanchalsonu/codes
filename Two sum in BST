@@ -1,0 +1,65 @@
+// check wheather sum of any two nodes is equal to the target
+
+#include <bits/stdc++.h> 
+// Following is the Binary Tree node structure
+/**************
+class BinaryTreeNode {
+    public : 
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data) {
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+    
+};
+***************/
+
+void Inorder(BinaryTreeNode<int>* root, vector<int>& inorderVal)
+{
+    if(root == NULL)
+    return;
+
+    Inorder(root->left,inorderVal);
+    inorderVal.push_back(root->data);
+    Inorder(root->right,inorderVal);
+
+}
+
+
+bool twoSumInBST(BinaryTreeNode<int>* root, int target) {
+	//First find the inorder traversal of the tree and then check for the target sum  
+
+    if(root == NULL)
+    return false;
+
+    //to store INorder traversal
+    vector<int> inorderVal;
+    Inorder(root,inorderVal);
+
+    int i=0;
+    int j=inorderVal.size()-1;
+    int sum=0;
+
+    while(i<j)
+    {
+        sum = inorderVal[i]+inorderVal[j];
+        
+        if(sum == target)
+        return true;
+        else if(sum > target)
+        {
+            j--;
+        }
+        else
+        {
+            i++;
+        }
+
+    }
+    return false;
+
+}
