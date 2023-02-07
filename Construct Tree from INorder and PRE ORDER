@@ -1,0 +1,168 @@
+/*
+Given 2 Arrays of Inorder and preorder traversal. The tree can contain duplicate elements. Construct a tree and print the Postorder traversal. 
+
+Example 1:
+
+Input:
+N = 4
+inorder[] = {1 6 8 7}
+preorder[] = {1 6 7 8}
+Output: 8 7 6 1
+Example 2:
+
+Input:
+N = 6
+inorder[] = {3 1 4 0 5 2}
+preorder[] = {0 1 3 4 2 5}
+Output: 3 4 1 5 2 0
+Explanation: The tree will look like
+       0
+    /     \
+   1       2
+ /   \    /
+3    4   5
+
+*/
+
+//{ Driver Code Starts
+//
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node
+{
+	int data;
+	struct Node *left;
+	struct Node *right;
+	
+	Node(int x){
+	    data = x;
+	    left = NULL;
+	    right = NULL;
+	}
+};
+
+
+void printPostOrder(Node *root)
+{
+	if(root==NULL)
+		return;
+	printPostOrder(root->left);
+	printPostOrder(root->right);
+	cout<<root->data<<" ";
+}
+
+// } Driver Code Ends
+
+/*Complete the code here.
+Node is as follows:
+struct Node
+{
+  int data;
+  Node* left;
+  Node* right;
+};
+
+
+  int pos(int in[], int start , int end , int key){
+            for(int i=start; i<=end;i++)
+                if(in[i] == key)
+                    return i;
+                    
+            return -1;
+        }
+     
+     
+     Node* solve(int in[], int pre[], int &index, int instart,int inend,int n)
+     {
+         if(instart > inend || index >=n)
+            return NULL;
+            
+        int element = pre[index];
+        index++;
+        
+        int position = pos(in,instart,inend,element);
+        
+        Node* root= new Node(element);
+        root->left = solve(in,pre,index,instart,position-1,n);
+        root->right = solve(in,pre,index,position+1,inend,n);
+        
+        return root;
+     }
+     
+        
+     
+     
+    Node* buildTree(int in[],int pre[], int n)
+    {
+     int preorderIndex=0;
+     
+     Node* ans= solve(in,pre,preorderIndex,0,n-1,n);
+     return ans;
+    }
+*/
+class Solution{
+    public:
+    int findPosition(int in[],int ele,int start,int n)
+    {
+        for(int i=start;i<n;i++)
+        {
+            if( in[i] == ele)
+            return i;
+        }
+        return -1;
+    }
+    
+    Node* solve(int in[],int pre[], int& pindex,int inIndexStart,int inIndexLast,int n)
+    {
+        //base case
+        if(pindex >= n || inIndexStart > inIndexLast)
+        return NULL;
+        
+        //create a node 
+        int element = pre[pindex++];
+        Node * root = new Node(element);
+        int pos  = findPosition(in,element,inIndexStart,n);
+        
+        //calls to left and right part
+        root->left = solve(in,pre,pindex,inIndexStart,pos-1,n);
+        //call to roght side
+        root->right = solve(in,pre,pindex,pos+1,inIndexLast,n);
+        
+        return root;
+        
+        
+    }
+    
+    Node* buildTree(int in[],int pre[], int n)
+    {
+        int pindex=0;
+        Node * ans= solve(in,pre,pindex,0,n-1,n);
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n;
+		cin>>n;
+		
+		int inorder[n], preorder[n];
+		for(int i=0; i<n; i++)
+			cin>> inorder[i];
+		for(int i=0; i<n; i++)
+			cin>> preorder[i];
+		Solution obj;
+		Node *root = obj.buildTree(inorder, preorder, n);
+		printPostOrder(root);
+		cout<< endl;
+	}
+}
+
+// } Driver Code Ends
