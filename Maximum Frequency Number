@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+int maximumFrequency(vector<int> &arr, int n) { 
+    int i;
+       
+    map<int, int> mp; 
+    int maxfre=0;
+    int ans=0;
+
+    for(i=0;i<n;i++)
+    {
+        mp[arr[i]]++;
+        maxfre = max(maxfre,mp[arr[i]]);
+    }
+
+    
+    for(i=0;i<arr.size();i++)
+    {
+        if(maxfre == mp[arr[i]])
+        {
+            ans = arr[i];
+            break;
+        }
+    }
+
+    return ans;
+
+}
