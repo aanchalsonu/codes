@@ -1,0 +1,20 @@
+This is one of the datastructure used in C++
+here we use the convept similar to tree
+where Binary tree has only atmost 2 nodes there is no restriction in number of nodes for tries
+for ex: For the alphabet range between a-z there can be 26 nodes for root
+class called tries is decalred 
+which has a node pointer, data and isterminal boolean value
+
+This has time complexity of O(l)
+where l is the length of the string
+
+struct TrieNode 
+{ 
+     struct TrieNode *children[ALPHABET_SIZE];
+     // isEndOfWord is true if the node 
+     // represents end of a word 
+     bool isEndOfWord; 
+}; 
+
+we can perform insertion ,deletion and searching on tries
+
