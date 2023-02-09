@@ -1,0 +1,32 @@
+string longestCommonPrefix(vector<string> &arr, int n)
+{
+    string ans="";
+    
+    //given a 2d array of n strings
+    //check all the characters of first string with the other strings
+    int i,j;
+    for(i=0;i<arr[0].length();i++)
+    {
+        bool match = true;
+        char ch = arr[0][i];
+        for(j=1;j<n;j++)
+        {
+            if(ch != arr[j][i])
+            {
+                match = false;
+                break;
+            }
+        }
+        if(match == false)
+        {
+            break;
+        }
+        else
+        ans.push_back(ch);
+    }
+
+    return ans;
+
+}
+
+
