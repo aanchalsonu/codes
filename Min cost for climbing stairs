@@ -1,0 +1,52 @@
+/*
+You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.
+
+You can either start from the step with index 0, or the step with index 1.
+
+Return the minimum cost to reach the top of the floor.
+
+ 
+ */
+ 
+ class Solution {
+public:
+
+    int MOD = 100000007;
+    int solve(vector<int>& cost, int n,vector<int> &dp)
+    {
+        //base case
+        if( n== 0)
+        return cost[0];
+
+        if(n == 1)
+        return cost[1];
+        
+        //step 2 after dp
+        if(dp[n] != -1)
+        return dp[n];
+
+        dp[n] = cost[n] + min(solve(cost,n-1,dp), solve(cost,n-2,dp));
+        return dp[n];
+
+    }
+
+
+    int minCostClimbingStairs(vector<int>& cost) {
+        //using dp :
+        //for normal recrsion it gives time limit error 
+
+        //crete a dp array
+        int n = cost.size();
+
+        vector<int> dp(n+1,-1);
+
+        
+        //the step can be clinbed from either the n-1 th or n-2th step so recursive relation will be
+        // of the form
+
+        //for minimum cost 
+        int ans = min(solve(cost,n-1,dp), solve(cost,n-2,dp));
+        return ans; 
+
+    }
+};
