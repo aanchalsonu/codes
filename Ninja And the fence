@@ -1,0 +1,42 @@
+/*
+GIven a number n and colours k 
+paint the blocks with colours k such that not more than 2 adjacent blocks have same colour
+find number of possible combinations
+*/
+
+/*
+Using dp
+either paint a block with k colours and repeat the same coloue twice at the end
+keep the track from the base cases we can build a solution
+*/
+
+
+#include <bits/stdc++.h> 
+#define MOD 100000007
+
+int solve(int n,int k)
+{
+    //create a dp
+    vector<int> dp(n+1,0);
+    //base cases
+    dp[1] = k;
+    dp[2] = (k%MOD+(k*(k-1))%MOD)%MOD;
+
+
+    //rest of the caseas
+    for(int i=3;i<=n;i++)
+    {
+        dp[i] = ((dp[i-2]%MOD)*((k-1)%MOD) + (dp[i-1]%MOD)*(k-1)%MOD)%MOD;
+    }
+
+    return dp[n];
+}
+
+
+
+
+int numberOfWays(int n, int k) {
+    //solution by tabulation
+    return solve(n,k);
+
+}
