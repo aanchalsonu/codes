@@ -1,0 +1,41 @@
+/*
+
+Givean a number n and a target tar 
+your task is to find the number of ways to fullfill the target using the given numbers in the array 
+*/
+
+#include <bits/stdc++.h>
+
+int solve(vector<int> &num, int tar, vector<int> & dp)
+{
+    //base cases
+    //if target is equal to zero means we found a match
+    
+
+    //if target less then zero mean that this particular combination is not possible
+    if(tar < 0)
+    return 0;
+
+    if(tar == 0)
+    return 1;
+
+    //step 2 of dp
+    if(dp[tar] != -1)
+    return dp[tar];
+
+    int ans=0;
+    for(int i=0;i<num.size();i++)
+    {
+        ans += solve(num,tar-num[i],dp);
+    }
+    dp[tar] = ans;
+    return dp[tar];
+}
+
+
+int findWays(vector<int> &num, int tar)
+{
+    //create a dp array
+    vector<int> dp(tar+1,-1);
+    return solve(num,tar,dp);
+}
