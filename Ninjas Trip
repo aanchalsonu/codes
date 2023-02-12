@@ -1,0 +1,71 @@
+/*
+Given an array of days and cost for 2 days trips ie: 
+cost for 1 day
+coat for 7 day
+cost for 30 days
+divide the array in such a way that the trip is covered in minimum cost 
+*/
+
+#include<bits/stdc++.h>
+int solve(int n,vector<int> &days,vector<int> &cost,int index)
+{
+    //base case
+    
+    if( index >=n )
+    return 0;
+
+    //there are 3 possible options wheather to go with 1 day , 7,days or 30 days
+    // so solve each option individually and then find the minimum amounng them
+
+    int option1 = cost[0] + solve(n,days,cost,index+1);
+    // for the nect day
+
+    int i;
+    int option2;
+    for(i=index;i<n && days[i] < days[index]+7 ;i++);
+    //now i is at the index where days[i] < days[index]+7 that is it covers 7 days of journey
+    option2 = cost[1] + solve(n,days,cost,i);
+
+    ///option3 for 30 days
+    for(i=index;i<n && days[i]< days[index]+30 ;i++);
+    int option3 = cost[2] + solve(n,days,cost,i);
+
+    return  min(option1, min(option2,option3));
+    // return ans;
+
+}
+
+
+
+
+int minimumCoins(int n, vector<int> days, vector<int> cost)
+{
+    return solve(n,days,cost,0);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
