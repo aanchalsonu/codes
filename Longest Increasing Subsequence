@@ -1,0 +1,110 @@
+/*
+Given an array of integers, find the length of the longest (strictly) increasing subsequence from the given array.
+
+Example 1:
+
+Input:
+N = 16
+A[]={0,8,4,12,2,10,6,14,1,9,5
+     13,3,11,7,15}
+Output: 6
+Explanation:Longest increasing subsequence
+0 2 6 9 13 15, which has length 6
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+
+class Solution
+{
+    public:
+    //Function to find length of longest increasing subsequence.
+    
+    int solve(int n, int a[],int curr, int prev)
+    {
+        //base case
+        if(curr == n)
+        return 0;
+        
+        //two possible cases 
+        // 1.take the number
+        int take=0;
+        if(prev == -1 || a[curr] > a[prev])
+        take = 1 + solve(n,a,curr+1,curr);
+        
+        //2.not take : here previous does not change
+        int notake=0;
+        // if(a[curr] < a[prev])
+        notake = solve(n,a,curr+1,prev);
+        
+        int ans = max(take,notake);
+        return ans;
+    }
+    
+    
+    
+    int solveMem(int n, int a[],int curr, int prev,vector<vector<int>> &dp)
+    {
+        //base case
+        if(curr == n)
+        return 0;
+        
+        //two possible cases 
+        // 1.take the number
+        
+        if(dp[curr][prev+1] != -1)
+        return dp[curr][prev+1];
+        
+        int take=0;
+        if(prev == -1 || a[curr] > a[prev])
+        take = 1 + solveMem(n,a,curr+1,curr,dp);
+        
+        //2.not take : here previous does not change
+        int notake=0;
+        // if(a[curr] < a[prev])
+        notake = solveMem(n,a,curr+1,prev,dp);
+        
+        dp[curr][prev+1] = max(take,notake);
+        return dp[curr][prev+1];
+    }
+    
+    int longestSubsequence(int n, int a[])
+    {
+       //solve by recursion
+    //   return solve(n,a,0,-1);
+    
+    
+    //solve by memorization
+    
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));
+        return solveMem(n,a,0,-1,dp);
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    //taking total testcases
+    int t,n;
+    cin>>t;
+    while(t--)
+    {
+        //taking size of array
+        cin>>n;
+        int a[n];
+        
+        //inserting elements to the array
+        for(int i=0;i<n;i++)
+            cin>>a[i];
+        Solution ob;
+        //calling method longestSubsequence()
+        cout << ob.longestSubsequence(n, a) << endl;
+    }
+}
+
+// } Driver Code Ends
