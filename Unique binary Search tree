@@ -1,0 +1,38 @@
+/*
+Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+
+
+Input: n = 3
+Output: 5
+*/
+
+class Solution {
+public:
+
+    int solve(int n, vector<int> &dp)
+    {
+        //base case : ie 1 or less nodes are there then possible ways to arrange them is only 1
+        if(n <= 1)
+        return 1;
+
+        if(dp[n] != -1)
+        return dp[n];
+
+        int ans=0;
+        // make every node as root onr by one and calculate the answer
+        for(int i =1 ; i<=n;i++)
+        {
+            ans += solve(i-1,dp) * solve(n-i,dp);
+
+        }
+
+        return dp[n] = ans;
+    }
+
+    int numTrees(int n) {
+        //create dp 
+        vector<int> dp(n+1,-1);
+        return solve(n,dp);
+
+    }
+};
