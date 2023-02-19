@@ -1,0 +1,137 @@
+/*
+
+Given an array Arr[] that contains N integers (may be positive, negative or zero). Find the product of the maximum product subarray.
+
+Example 1:
+
+Input:
+N = 5
+Arr[] = {6, -3, -10, 0, 2}
+Output: 180
+Explanation: Subarray with maximum product
+is [6, -3, -10] which gives product as 180.
+Example 2:
+
+Input:
+N = 6
+Arr[] = {2, 3, 4, 5, -1, 0}
+Output: 120
+Explanation: Subarray with maximum product
+is [2, 3, 4, 5] which gives product as 120.
+*/
+
+
+/*
+SOLUTION APPROACH:
+
+keep multiplying the array elements to cmax
+and find corresponding maximum value
+
+if negative value is found
+then swap the minimum and maximum value
+
+
+*/
+
+
+// { Driver Code Starts
+#include <bits/stdc++.h>
+
+using namespace std;
+
+ // } Driver Code Ends
+//User function template for C++
+class Solution{
+public:
+
+
+    // long long maxi(int index, vector<int> arr, int n)
+    // {
+    //     if(index > n-1)
+    //     return 1;
+        
+    //     long long res=1;
+    //     long long take = arr[index]*maxi(index+1,arr,n);
+    //     long long notake = maxi(index+1,arr,n);
+        
+        
+    //     res = max(take,notake);
+    //     return res;
+    // }
+
+
+    // long long max(long long a,long long b)
+    // {
+    //     if(a>b)
+    //     return a;
+    //     return b;
+    // }
+    // long long min(long long a,long long b)
+    // {
+    //     if(a<b)
+    //     return a;
+    //     return b;
+    // }
+	// Function to find maximum product subarray
+	
+	
+	long long max(long long a, long long b)
+	{
+	    return a>b ? a : b;
+	}
+	
+	long long min(long long a, long long b)
+	{
+	    return a<b ? a : b;
+	}
+	
+	long long maxProduct(vector<int> arr, int n) {
+	    long long cmax=1;
+	    long long cmin =1;
+	    long long maxi=INT_MIN;
+	    
+	    for(int i=0;i<n;i++)
+	    {
+	        //if negative then swap each of them
+	        if(arr[i] < 0)
+	        {
+	            long long temp = cmax;
+	            cmax = cmin;
+	            cmin = temp;
+	        }
+	        
+	        cmax = max(cmax*arr[i],arr[i]);
+	        cmin = min(cmin*arr[i],arr[i]);
+	        
+	        maxi = max(maxi,cmax);
+	    }
+	    return maxi;
+ 
+	    // code here
+	   // long long maxi,mini;
+	   // maxi = *max_element(arr.begin(),arr.end());
+	   // mini = *min_element(arr.begin(),arr.end());
+	    
+	    
+	   // return maxi(0,arr,n);
+	}
+};
+
+// { Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, i;
+        cin >> n;
+        vector<int> arr(n);
+        for (i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+        Solution ob;
+        auto ans = ob.maxProduct(arr, n);
+        cout << ans << "\n";
+    }
+    return 0;
+}  // } Driver Code Ends
