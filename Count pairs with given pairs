@@ -1,0 +1,100 @@
+/*
+
+Given an array of N integers, and an integer K, find the number of pairs of elements in the array whose sum is equal to K.
+
+
+Example 1:
+
+Input:
+N = 4, K = 6
+arr[] = {1, 5, 7, 1}
+Output: 2
+Explanation: 
+arr[0] + arr[1] = 1 + 5 = 6 
+and arr[1] + arr[3] = 5 + 1 = 6.
+
+Example 2:
+
+Input:
+N = 4, K = 2
+arr[] = {1, 1, 1, 1}
+Output: 6
+Explanation: 
+Each 1 will produce sum 2 with any 1.
+
+*/
+
+
+/*
+SOLUTION APPROACH 
+
+
+Given k to find int the given array in O(N) so we can use only a single for loop brute force will lead to Time Limit Exceed
+
+SUM (K) = a +b 
+a = K - b
+so try to find a such that a = K - b
+
+Keep a map to record such values
+if count of target = K- b is greater than one then increase the count by one and decrease the value in map 
+
+*/
+
+// { Driver Code Starts
+//Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+//User function template for C++
+
+class Solution{   
+public:
+
+    int getPairsCount(int arr[], int n, int k) {
+        // code here
+        unordered_map<int,int> mp;
+        for(int i=0;i<n;i++)
+        {
+            mp[arr[i]]++;
+        }
+        
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            int target = k-arr[i];
+            //a+b = sum similaryly a = sum -b;
+            if(mp.find(target) != mp.end())
+            {
+                //increase the count by number of tines the target occurs
+                
+                //decrease the arr[i] for which the sum =k is found
+                mp[arr[i]]--;
+                count += mp[target];
+            }
+        }
+        
+        return count;
+    }
+};
+
+// { Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+        Solution ob;
+        auto ans = ob.getPairsCount(arr, n, k);
+        cout << ans << "\n";
+    }
+    
+    return 0;
+}  // } Driver Code Ends
