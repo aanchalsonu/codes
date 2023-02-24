@@ -1,0 +1,83 @@
+/*
+
+Given a string of characters, find the length of the longest proper prefix which is also a proper suffix.
+
+NOTE: Prefix and suffix can be overlapping but they should not be equal to the entire string.
+
+Example 1:
+
+Input: s = "abab"
+Output: 2
+Explanation: "ab" is the longest proper 
+prefix and suffix. 
+Example 2:
+
+Input: s = "aaaa"
+Output: 3
+Explanation: "aaa" is the longest proper 
+prefix and suffix. 
+
+*/
+
+//{ Driver Code Starts
+//Initial template for C++ 
+ 
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+//User function template for C++
+
+class Solution{
+  public:		
+	int lps(string s) {
+	    int len=0;
+	    int j=1;
+	    int sx = s.size();
+	    while(j<sx)
+	    {
+	        if(s[len] == s[j])
+	        {
+	            len++;
+	            j++;
+	        }
+	        else
+	        {
+	            j = j-len+1;
+	            len=0;
+	        }
+	    }
+	    return len;
+	}
+};
+
+
+
+//{ Driver Code Starts.
+
+int main() 
+{
+   
+
+   	ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+   
+   	int t;
+   	cin >> t;
+   	while(t--)
+   	{
+   		string str;
+   		cin >> str;
+
+   		Solution ob;
+
+   		cout << ob.lps(str) << "\n";
+   	}
+
+    return 0;
+}
+
+// } Driver Code Ends
