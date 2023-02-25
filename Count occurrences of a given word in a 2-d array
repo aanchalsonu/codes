@@ -1,0 +1,127 @@
+/*
+
+Find the number of occurrences of a given search word in a 2d-Array of characters where the word can go up, down, left, right, and around 90-degree bends.
+Note: While making a word you can use one cell only once.
+
+
+Example 1:
+
+Input: 
+R = 4, C = 5
+mat = {{S,N,B,S,N},
+       {B,A,K,E,A},
+       {B,K,B,B,K},
+       {S,E,B,S,E}}
+target = SNAKES
+Output:
+3
+Explanation: 
+S N B S N
+B A K E A
+B K B B K
+S E B S E
+Total occurrence of the word is 3
+and denoted by color.
+Example 2:
+
+Input:
+R = 3, C = 3 
+mat = {{c,a,t},
+       {a,t,c},
+       {c,t,a}}
+target = cat
+Output:
+5
+Explanation: Same explanation
+as first example.
+
+
+
+*/
+
+//{ Driver Code Starts
+// Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{
+    public:
+    
+    int searchstr(vector<vector<char> > &mat,int i,int j,int n,int m,string 
+    s,int idx)
+    {
+        //out of bound or not found condition
+        if(i<0 || i>=n || j<0 || j>=m || mat[i][j] == '0' || mat[i][j] != 
+        s[idx])
+        return 0;
+        
+        //found and reached end condition
+        if(idx == s.length()-1)
+        return 1;
+        
+        //take the character and mark it as visited by changinf a[i][j]=0
+        char ch = mat[i][j];
+        mat[i][j] = '0';
+        
+        //up
+        int temp1 = searchstr(mat,i-1,j,n,m,s,idx+1);
+        //right
+        int temp2 = searchstr(mat,i,j+1,n,m,s,idx+1);
+        //down
+        int temp3 = searchstr(mat,i+1,j,n,m,s,idx+1);
+        //left
+        int temp4 = searchstr(mat,i,j-1,n,m,s,idx+1);
+        mat[i][j] = ch;
+        
+        return temp1+temp2+temp3+temp4;
+      
+    }
+    
+    int solve(vector<vector<char> > &mat, string target)
+    {
+        int found =0;
+        int row = mat.size();
+        int col = mat[0].size();
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                if(mat[i][j] == target[0])
+                found += searchstr(mat,i,j,row,col,target,0);
+            }
+        }
+        return found;
+    }
+    
+    int findOccurrence(vector<vector<char> > &mat, string target){
+        
+        return solve(mat,target);
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int R, C;
+        cin >> R >> C;
+        vector<vector<char> > mat(R);
+        for (int i = 0; i < R; i++) {
+            mat[i].resize(C);
+            for (int j = 0; j < C; j++) cin >> mat[i][j];
+        }
+        string target;
+        cin >> target;
+        Solution obj;
+        cout<<obj.findOccurrence(mat,target)<<endl;
+    }
+}
+
+// } Driver Code Ends
