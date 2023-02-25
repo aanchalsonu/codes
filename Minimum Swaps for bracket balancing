@@ -1,0 +1,78 @@
+/*
+
+You are given a string S of 2N characters consisting of N ‘[‘ brackets and N ‘]’ brackets. A string is considered balanced if it can be represented
+in the for S2[S1] where S1 and S2 are balanced strings. We can make an unbalanced string balanced by swapping adjacent characters. Calculate the minimum 
+number of swaps necessary to make a string balanced.
+Note - Strings S1 and S2 can be empty.
+
+ 
+
+Example 1:
+
+Input  : []][][
+Output : 2
+Explanation :
+First swap: Position 3 and 4
+[][]][
+Second swap: Position 5 and 6
+[][][]
+
+ 
+
+Example 2:
+
+Input : [[][]]
+Output : 0 
+Explanation:
+String is already balanced.
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// } Driver Code Ends
+class Solution{   
+public:
+    int minimumNumberOfSwaps(string S){
+        int open=0;
+        int count=0;
+        
+        int i;
+        
+        for(i=0;i<S.length();i++)
+        {
+            if(S[i] == '[')
+            open++;
+            else
+            {
+                open--;
+                if(open<0)
+                {
+                    count += -open;
+                }
+            }
+        }
+        
+        // count = count + open;
+        return count;
+    }
+};
+
+//{ Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string S;
+        cin >> S;
+        Solution ob;
+        cout << ob.minimumNumberOfSwaps(S) << endl;
+    }
+    return 0; 
+} 
+// } Driver Code Ends
+ 
