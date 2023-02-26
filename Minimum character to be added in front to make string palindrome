@@ -1,0 +1,92 @@
+/*
+
+Given string str of length N. The task is to find the minimum characters to be added at the front to make string palindrome.
+Note: A palindrome is a word which reads the same backward as forward. Example: "madam".
+
+Example 1:
+
+Input:
+S = "abc"
+Output: 2
+Explanation: 
+Add 'b' and 'c' at front of above string to make it
+palindrome : "cbabc"
+Example 2:
+
+Input:
+S = "aacecaaa"
+Output: 1
+Explanation: Add 'a' at front of above string
+to make it palindrome : "aaacecaaa"
+
+*/
+
+
+/*
+Time complexity is : O(N^2)
+Can be solved in O(N)
+*/
+
+//{ Driver Code Starts
+/* Driver program to test above function */
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+public:
+
+    bool ispalin(string str)
+    {
+        int i=0,j= str.length()-1;
+        for(;i<str.length()/2 && j >= str.length()/2;i++,j--)
+        {
+            if(str[i] != str[j])
+            return false;
+        }
+        return true;
+    }
+
+    int minChar(string str){
+        int n = str.length();
+        int i,j=0,count=0;
+        i=0;
+        while(i<=n)
+        {
+            if(ispalin(str))
+            {
+                j=1;
+                break;
+            }
+            else
+            {
+                count++;
+                str.erase(str.begin()+str.length()-1);
+            }
+        }
+        if(j=1)
+        return count;
+        else
+        return 0;
+    }
+};
+
+
+//{ Driver Code Starts.
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    string str;
+	    cin >> str;
+	    Solution ob;
+	    int ans = ob.minChar(str);
+	    cout << ans<<endl;
+	}
+	return 0;
+}
+
+// } Driver Code Ends
