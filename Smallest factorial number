@@ -1,0 +1,118 @@
+/*
+
+Given a number n. The task is to find the smallest number whose factorial contains at least n trailing zeroes.
+
+Example 1:
+
+Input:
+n = 1
+Output: 5
+Explanation : 5! = 120 which has at
+least 1 trailing 0.
+Example 2:
+
+Input:
+n = 6
+Output: 25
+Explanation : 25! has at least
+6 trailing 0.
+
+*/
+
+/* Approach: number of 2 and 5 in an factorial array decides number of trailing 0. also, we can observe in prime factor of any number's factorial that 
+
+               2's are more than 5's so we need to find minimum count of (5 and 2) in an factorial.  we need not find count of 2 because
+               until we have matching 5, it wont create trailing 0.
+
+               so, problem reduces to finding number of 5 factors.
+
+               
+
+               how to find number of 5 factor :
+
+                countOf5 = n/5 + n/5*5 + n/(5*5*5)  ..... so on. for given value of n.
+
+                example: n=20 there will be 5 factors -> 5, 10(5*2), 15(5*3), 20(5*4).
+
+                        n=25 there will be 6 factors because 25 = 5*5 it gives one extra 5 to be multiplied with available 2 
+                        (which comes from number ending with 2, 4, 6, 8). 
+
+                        n=30 there will be 7 factors because upto 25 -> its 6 then 30(6*5) . so other way to find
+
+                        30.   30
+
+                        -  +  --   = 7
+
+                        5.    25  
+
+                                                                                           N      N         N                N
+
+            general equation to count of digit(d) in a series is  -- +   --   +   ---  .........    ---     until d*d*d*.. becomes greater than N.
+
+                                                                                           d.    d*d.    d*d*d          d*d*d...
+
+why Binary search                                                                   
+
+                Since we know that our answer lies between 0 to n*5 depending on cout digits in series, we can apply binary search between 0 to n*5
+
+        */         
+        
+        
+        //{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+class Solution
+{
+    public:
+    
+        int findcount(int m)
+        {
+            int factor = 5;
+            int deno = factor;
+            int c=0;
+            while(deno <= m)
+            {
+                 c = c + (m/deno);
+                 deno = deno *factor;
+            }
+            return c;
+        }
+        int findNum(int n)
+        {
+            int l=0;
+            int h = n*5;
+            int ans=0;
+            while(l<=h)
+            {
+                int m = l+(h-l)/2;
+                int count = findcount(m);
+                if(count >= n)
+                {
+                    ans = m;
+                    h = m-1;
+                }
+                else
+                l = m+1;
+            }
+            return ans;
+        }
+};
+
+//{ Driver Code Starts.
+
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        Solution ob;
+        cout <<ob.findNum(n) << endl;
+    }
+return 0;
+}
+// } Driver Code Ends
