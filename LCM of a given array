@@ -1,0 +1,69 @@
+/*
+Given an array A[ ] of N numbers, your task is to find LCM of it modulo 1000000007
+
+Example 1:
+
+Input:
+N = 4
+A = {1 , 2 , 8 , 3}
+Output:
+24
+Explanation:
+LCM of the given array is 24.
+24 % 1000000007 = 24
+Example 2:
+
+Input:
+N = 2
+A = {1 , 8}
+Output:
+8
+Explanation:
+LCM of the given array is 8.
+*/
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  
+  int gcd(int a,int b)
+  {
+      if(b==0)
+      return a;
+      return gcd(b,a%b);
+  }
+    int lcmOfArray(int N , int A[]) {
+        long long ans = A[0];
+        for(int i=1;i<N;i++)
+        {
+            long long b = A[i];
+            ans = ((ans*b)/(gcd(ans,b)))%1000000007;
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        
+        cin>>N;
+        int A[N];
+        
+        for(int i=0 ; i<N ; i++)
+            cin>>A[i];
+
+        Solution ob;
+        cout<<ob.lcmOfArray(N,A)<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
