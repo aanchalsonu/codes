@@ -1,0 +1,77 @@
+/*
+
+Juggler Sequence is a series of integers in which the first term starts with a positive integer number a and the remaining terms are generated from the immediate previous term using the below recurrence relation:
+
+Juggler Formula
+
+Given a number N, find the Juggler Sequence for this number as the first term of the sequence.
+
+
+Example 1:
+
+Input: N = 9
+Output: 9 27 140 11 36 6 2 1
+Explaination: We start with 9 and use 
+above formula to get next terms.
+ 
+
+Example 2:
+
+Input: N = 6
+Output: 6 2 1
+Explaination: 
+61/2 = 2. 
+21/2 = 1.
+
+
+*/
+
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    vector<int> jugglerSequence(int N){
+        // code here
+        long int a,b;
+        vector<int> ans;
+        cout<<N<<" ";
+        a = N;
+        while(a != 1)
+        {
+            if(a%2 == 0)
+            b = sqrt(a);
+            else
+            b = (sqrt(a)*sqrt(a)*sqrt(a));
+            
+            ans.push_back(b);
+            a = b;
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int N;
+        cin>>N;
+        
+        Solution ob;
+        vector<int> ans = ob.jugglerSequence(N);
+        for(int u: ans)
+            cout<<u<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
