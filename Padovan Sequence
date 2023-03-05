@@ -1,0 +1,74 @@
+/*
+A Padovan Sequence is a sequence which is represented by the following recurrence relation
+P(N) = P(N-2) + P(N-3)
+P(0) = P(1) = P(2) = 1
+Given a number N, find the Nth number in this sequence.
+
+Note: Since the output may be very large, compute the answer modulus 10^9+7.
+
+
+Example 1:
+
+Input:
+N = 3
+Output: 2
+Explanation: P1 + P0 = P3
+P1 = 1 and P0 = 1
+
+â€‹Example 2:
+
+Input: 
+N = 4
+Output: 2
+Explanation: P2 + P1 = P4
+ P2 = 1 and P1 = 1
+
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+class Solution
+{
+    public:
+    
+    int solve(int num)
+    {
+        int pp=1,p=1,c=1,n=1,i;
+        for(i=3;i<=num;i++)
+        {
+            n = pp+p;
+            pp=p;
+            p=c;
+            c=n;
+        }
+        return n;
+    }
+    
+    int padovanSequence(int n)
+    {
+       return solve(n);
+    }
+    
+};
+
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+    	int n;
+    	cin>>n;
+    	Solution ob;
+    	cout<<ob.padovanSequence(n)<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
