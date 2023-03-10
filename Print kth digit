@@ -1,0 +1,103 @@
+/*
+Given two numbers A and B, find Kth digit from right of AB.
+ 
+
+Example 1:
+
+Input:
+A = 3
+B = 3
+K = 1
+Output:
+7
+Explanation:
+33 = 27 and 1st
+digit from right is 
+7
+Example 2:
+
+Input:
+A = 5
+B = 2
+K = 2
+Output:
+2
+Explanation:
+52 = 25 and second
+digit from right is
+2.
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h> 
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+public:
+    // int length(int n)
+    // {
+    //     int l=0;
+    //     while(n!=0)
+    //     {
+    //         l++;
+    //         n=n/10;
+    //     }
+    //     return l;
+    // }
+    long long int kthDigit(int a,int b,int K){
+        // code here
+        // long long int x = pow(a,b);
+        // long long int y;
+        // for(int i=0;i<k;i++)
+        // {
+        //     y = x%10;
+        //     x = x/10;
+        // }
+        // return k;
+        
+        
+        long long  int z= pow(a,b),k;
+
+        for(int i=0;i< K;i++){
+
+             k=z%10;
+
+            z=z/10;
+
+        }
+
+        return k;
+
+
+        // vector<int> arr;
+        // int i=0,n=0;
+        // while(x!=0)
+        // {
+        //     int y = x%10;
+        //     arr.push_back(y);
+        //     n++;
+        //     x  =x/10;
+        // }
+        // reverse(arr.begin(),arr.end());
+        // // int n = length(x);
+        // return arr[k];
+    }
+};
+
+//{ Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        long long int A,B,K;
+        cin>>A>>B>>K;
+        Solution ob;
+        cout << ob.kthDigit(A,B,K) << endl;
+    }
+    return 0; 
+}
+// } Driver Code Ends
