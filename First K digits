@@ -1,0 +1,64 @@
+/*
+Given a positive integer n, find first k digits after the decimal in the value of 1/n and return it as a string.
+
+Note: Your program should avoid overflow and floating-point arithmetic. 
+
+Example 1:
+
+Input: n = 3, k = 3
+Output: 333
+Explanation: 1/3=0.33333, so
+after point 3 digits are 3,3,3.
+â€‹Example 2:
+
+Input: n = 50, k = 4
+Output: 0200
+Explanation: 1/50=0.020000, so 
+after point 4 digits are 0,2,0,0.
+
+*/
+
+//{ Driver Code Starts
+//Initial template for c++
+
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{   
+public:
+    string Kdigits(int n, int k) { 
+        //complete the function here
+        
+        int i,rem,j=1;
+        string res="";
+        for(i=1;i<=k;i++)
+        {
+            rem = (10*j / n);
+            res = res + to_string(rem);
+            j = (10*j)%n;
+        }
+        return res;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, k;
+        cin >> n >> k;
+        Solution ob;
+        cout << ob.Kdigits(n, k) << endl;
+    
+    }
+    return 0; 
+} 
+
+// } Driver Code Ends
