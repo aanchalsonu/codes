@@ -1,0 +1,42 @@
+/******************************************************************************
+
+Check if a number is power of k using base changing method
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+bool solve(int n,int k)
+{
+    int i;
+    bool onseen = false;
+    while(n>0)
+    {
+        i = n%k;
+        if(i>1)
+        return false;
+        
+        if(i == 1)
+        {
+            if(onseen)
+            return false;
+            else
+            onseen = true;
+        }
+        n = n/k;
+    }
+    return true;
+}
+
+int main()
+{
+    int n,k;
+    cout<<"ENter number and its base\n";
+    cin>>n>>k;
+    cout<<"\nThe number can be expressed as power to the base : ";
+    if(solve(n,k) == true)
+    cout<<"Yes\n"<<endl;
+    else
+    cout<<"No\n";
+    return 0;
+}
