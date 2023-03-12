@@ -1,0 +1,47 @@
+/******************************************************************************
+
+program to convert decimal number to hexadecimal
+
+*******************************************************************************/
+#include <iostream>
+
+using namespace std;
+
+string solve(int n)
+{
+    string res = "";
+    int rem,i,j;
+    char ch;
+    while(n>0)
+    {
+        rem = n%16;
+        if(rem < 10)
+        ch = rem+48;
+        else if(rem > 10)
+        ch = rem  +55;
+        
+        res += ch;
+        n = n/16;
+    }
+    
+    //reverse the string to get correct answer 
+    for(i=0,j=res.length()-1;i<=res.length()/2 && j >= res.length()/2;i++,j--)
+    {
+        char t = res[i];
+        res[i] = res[j];
+        res[j] = t;
+    }
+    return res;
+}
+
+int main()
+{
+    int n;
+    cout<<"Enter the number \n";
+    cin>>n;
+    string s;
+    s = solve(n);
+    cout<<s<<endl;
+
+    return 0;
+}
