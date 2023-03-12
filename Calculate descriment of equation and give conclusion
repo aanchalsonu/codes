@@ -1,0 +1,29 @@
+/******************************************************************************
+
+find the descriminent of a equation and give conclusion
+
+*******************************************************************************/
+#include <stdio.h>
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int a,b,c,r;
+    cout<<"Enter 3 of coefficients ";
+    cin>>a>>b>>c;
+    r = pow(b,2)-(4*a*c);
+    if(r == 0)
+    {
+        cout<<"descriminent is : "<<r<<" and one solution is possible\n";
+    }
+    else if(r>0)
+    {
+        cout<<"descriminent is : "<<r<<" and two solution is possible\n";
+    }
+    else if(r<0)
+    {
+        cout<<"descriminent is : "<<r<<" and no solution is possible\n";
+    }
+    return 0;
+}
