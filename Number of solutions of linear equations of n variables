@@ -1,0 +1,42 @@
+/******************************************************************************
+
+Find number of solutions of a linear equation of n variables.
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int count(int c[], int start,int end,int rhs)
+{
+    if(rhs == 0)
+    return 1;
+    
+    int result =0;
+    for(int i=start;i<=end;i++)
+    {
+        if(c[i] <= rhs)
+        result += count(c,i,end,rhs-c[i]);
+    }
+    return result;
+}
+
+
+int main()
+{
+    int rhs,n;
+    cout<<"Enter number of coefficients \n";
+    cin>>n;
+    int c[n]={0};
+    cout<<"ENter the coefficients\n";
+    for(int i=0;i<n;i++)
+    {
+        cin>>c[i];
+    }
+    cout<<"Enter right hand side\n";
+    cin>>rhs;
+    cout<<"Number os solutions possible are "<<count(c,0,n-1,rhs)<<endl;
+    
+    
+    return 0;
+}
