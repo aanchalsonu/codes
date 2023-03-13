@@ -1,0 +1,128 @@
+/*
+A prime number is Super Prime if it is a sum of two primes. Find all the Super Primes upto N
+
+Example 1:
+
+Input:
+N = 5
+Output: 1
+Explanation: 5 = 2 + 3, 5 is the
+only super prime
+
+Example 2:
+
+Input:
+N = 10 
+Output: 2
+Explanation: 5 and 7 are super primes
+*/
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function template for C++
+class Solution{
+public:
+
+
+
+    bool prime(int n){
+
+     if(n<2){
+
+         return false;
+
+     }
+
+     for(int i=2;i*i<=n;i++){
+
+         if(n%i==0){
+
+             return false;
+
+         }
+
+     }return true;
+
+ }
+
+ int superPrimes(int n)
+
+ {
+
+     int count=0;
+
+     for(int i=5;i<=n;i++){
+
+         if(prime(i-2) and prime(i)){
+
+             count++;
+
+         }
+
+     }return count;
+
+ }
+	
+// 	bool isprime(int n)
+// 	{
+// 	    if(n<2)
+// 	    return false;
+// 	    for(int i=2;i<sqrt(n);i++)
+// 	    {
+// 	        if(n%i == 0)
+// 	        return false;
+// 	    }
+// 	    return true;
+// 	}
+	
+// 	int superPrimes(int n)
+// 	{
+// 	    // Your code goes here
+// 	   // int i,j,res=0;
+// 	   // vector<int> store;
+	    
+// 	   // for(i=2;i<=n;i++)
+// 	   // {
+// 	   //     if(isprime(i))
+// 	   //     {
+// 	   //         store.push_back(i);
+// 	   //     }
+// 	   // }
+// 	    int res=0;
+// 	    for(int i=5;i<=n;i++)
+// 	    {
+// 	        if(isprime(i-2) && isprime(i))
+// 	        res++;
+// 	    }
+// 	    return res;
+	    
+// 	}
+};
+
+//{ Driver Code Starts.
+
+int main() 
+{
+
+   	ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+   
+   	int t;
+   	cin >> t;
+   	while(t--)
+   	{
+   		int n;
+   		cin >> n;
+   		Solution ob;
+   		cout << ob.superPrimes(n) << "\n";
+   	}
+
+    return 0;
+}
+
+// } Driver Code Ends
