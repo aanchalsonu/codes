@@ -1,0 +1,96 @@
+/*
+Given a number n, the task is to find out whether this number is a Smith Number or not. A Smith Number is a composite number whose sum of
+digits is equal to the sum of digits of its prime factorization.
+
+ 
+
+Example 1:
+
+Input:
+n = 4
+Output:
+1
+Explanation:
+Prime factorization = 2, 2; and 2 + 2 = 4
+Therefore, 4 is a Smith Number.
+Example 2:
+
+Input:
+n = 6
+Output:
+0
+Explanation:
+Prime factorization = 2, 3; and 2 + 3 is
+not 6. Therefore, 6 is Not a Smith Number.
+
+*/
+
+//{ Driver Code Starts
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+  
+    
+     bool isprime(int n)
+{
+   if (n <= 1)
+       return false;
+
+   for (int i = 2; i <= sqrt(n); i++)
+       if (n % i == 0)
+           return false;
+
+   return true;
+}
+int sumdigits(int n)
+{
+  int sum=0;
+  while(n)
+  {
+      sum=sum+n%10;
+      n=n/10;
+  }
+   return sum;
+}
+int smith(int n)
+{
+   for(int i=2;i<=sqrt(n);i++)
+       if(n%i==0 && isprime(i))
+           return sumdigits(i) + smith(n/i);
+   return sumdigits(n);
+   
+}
+int smithNum(int n) {
+       // code here
+        if(n==1)
+       return false;
+   if(isprime(n))
+       return false;
+   int sum = sumdigits(n);
+   if(sum == smith(n))
+       return true;
+   return false;
+   }
+    
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        
+        cin>>n;
+
+        Solution ob;
+        cout << ob.smithNum(n) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
