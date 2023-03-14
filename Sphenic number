@@ -1,0 +1,86 @@
+/*
+
+A Sphenic Number is a positive integer N which is product of exactly three distinct primes. The first few sphenic numbers are 30, 42, 66, 70, 78, 102, 
+105, 110, 114, …
+Given a number N, your task is to find whether it is a Sphenic Number or not.
+ 
+
+Example 1:
+
+Input: N = 30
+Output: 1
+Explanation: 30 = 2 * 3 * 5 so N is 
+product of 3 distinct prime numbers.
+Example 2:
+
+Input: N = 60
+Output: 0
+Explanation: 60 = 2 * 2 * 3 * 5 so N is
+product of 4 prime numbers.
+
+*/
+
+//{ Driver Code Starts
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+
+class Solution{
+	public:
+	bool isprime(int n)
+	{
+	    if(n<2)
+	    return false;
+	    for(int i=2;i<=sqrt(n);i++)
+	    {
+	        if(n%i == 0)
+	        return false;
+	    }
+	    return true;
+	}
+	
+	int isSphenicNo(int n){
+	    // Code here
+	    int i,j,x,c,mul;
+	    x=n;
+	    mul=1;
+	    c=0;
+	    for(i=2;i<x;i++)
+	    {
+	        if(n%i == 0)
+	        {
+	            if(isprime(i))
+	            {
+	                c++;
+	                mul= mul*i;
+	            }
+	        }
+	    }
+	    if(c==3 && mul== n)
+	    {
+	        return 1;
+	    }
+	    return 0;
+	    
+	    
+	}
+};
+
+//{ Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int N;
+		cin >> N;
+		Solution ob;
+		int ans = ob.isSphenicNo(N);
+		cout << ans <<"\n";
+	}  
+	return 0;
+}
+// } Driver Code Ends
