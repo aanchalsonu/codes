@@ -1,0 +1,87 @@
+/*
+
+Given a number n, the task is to calculate its primorial. Primorial of a number is similar to factorial of a number. In primorial, 
+not all the natural numbers get multiplied; only prime numbers are multiplied to calculate the primorial of a number. It is denoted with P#.
+
+ 
+
+Example 1:
+
+Input:
+N = 5
+Output: 30
+Explanation:
+Priomorial = 2 * 3 * 5 = 30
+As a side note, factorial is 2 * 3 * 4 * 5
+ 
+
+Example 2:
+
+Input:
+N = 12
+Output: 2310
+
+*/
+
+//{ Driver Code Starts
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+
+// } Driver Code Ends
+
+
+class Solution {
+
+public:
+    void precompute()
+    {
+        // Code Here
+        NULL;
+    }
+    bool isprime(int n)
+    {
+        if(n<2)
+        return false;
+        
+        for(int i=2;i<=sqrt(n);i++)
+        {
+            if(n%i ==0)
+            return false;
+        }
+        return true;
+    }
+    long long primorial(long long n){
+        // Code here
+        
+        long long res=1;
+        int m= 1e9+7;
+        for(int i=2;i<=n;i++)
+        {
+            if(isprime(i))
+            {
+                res = (res * i)%m;
+            }
+        }
+        return res%m;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main()
+{
+    Solution ob;
+    ob.precompute();
+    int t; cin >> t;
+    while(t--)
+    {
+        long long n;
+        cin>>n;
+        cout << ob.primorial(n) << endl;
+    }
+    return 0;
+} 
+// } Driver Code Ends
