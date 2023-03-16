@@ -1,0 +1,81 @@
+/*
+
+Given an integer N, find the number of digits that appear in its factorial, where factorial is defined as, factorial(n) = 1*2*3*4……..*n and factorial(0) = 1
+
+Examples : 
+
+Input:  5
+Output: 3
+Explanation: 5! = 120, i.e., 3 digits
+
+Input: 10
+Output: 7
+Explanation: 10! = 3628800, i.e., 7 digits
+ 
+ 
+ We know,
+log(a*b) = log(a) + log(b)
+
+Therefore
+log( n! ) = log(1*2*3……. * n) = log(1) + log(2) + …….. +log(n)
+
+Now, observe that the floor value of log base 
+10 increased by 1, of any number, gives the
+number of digits present in that number.
+Hence, output would be : floor(log(n!)) + 1.
+
+*/
+
+
+/******************************************************************************
+Count number of digits in factorial of a number using logarithmic function
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+// int finddigit(int n)
+// {
+//     if(n<0)
+//     return 0;
+    
+//     if(n<=1)
+//     return 1;
+    
+//     int digits=0;
+//     for(int i=2;i<=n ;i++)
+//     digits += log10(i);
+    
+//     return floor(digits)+1;
+// }
+
+int findDigits(int n)
+{
+    // factorial exists only for n>=0
+    if (n < 0)
+        return 0;
+  
+    // base case
+    if (n <= 1)
+        return 1;
+  
+    // else iterate through n and calculate the
+    // value
+    double digits = 0;
+    for (int i = 2; i <= n; i++)
+        digits += log10(i);
+  
+    return floor(digits) + 1;
+}
+ 
+int main()
+{
+    int n,r;
+    cin>>n;
+    r = findDigits(n);
+    cout<<r<<endl;
+    
+
+    return 0;
+}
