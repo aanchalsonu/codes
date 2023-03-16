@@ -1,0 +1,82 @@
+/*
+
+
+A Krishnamurthy number is a number whose sum of the factorial of digits is equal to the number itself. Given a number N as input. 
+Print "YES" if it's a Krishnamurthy Number, else Print "NO".
+
+ 
+
+Example 1:
+
+Input:
+N = 145
+Output:
+YES
+Explanation:
+1! + 4! + 5! = 145 So, 145 is a 
+Krishnamurthy Number and therefore 
+the Output "YES".
+Example 2:
+
+Input:
+N = 14
+Output:
+NO
+Explanation:
+1! + 4! = 25 So, 14 isn't a 
+Krishnamurthy Number and therefore 
+the Output "NO".
+
+*/
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  
+    int fact(int n)
+    {
+        if(n == 0 || n==1)
+        return 1;
+        return n*fact(n-1);
+    }
+  
+    string isKrishnamurthy(int n) {
+        // code here
+        int r,sum=0,x;
+        x = n;
+        while(n>0)
+        {
+            r = n%10;
+            sum = sum + fact(r);
+            n = n/10;
+        }
+        if(sum == x)
+        {
+            return "YES";
+        }
+        else
+        {
+            return "NO";
+        }
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        
+        cin>>N;
+
+        Solution ob;
+        cout << ob.isKrishnamurthy(N) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
