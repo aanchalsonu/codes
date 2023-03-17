@@ -1,0 +1,51 @@
+/******************************************************************************
+
+Zeckendorf’s Theorem (Non-Neighbouring Fibonacci Representation) 
+
+Zeckendorf’s theorem states that every positive integer can be written uniquely as a sum of distinct 
+non-neighbouring Fibonacci numbers. Two Fibonacci numbers are neighbours if they one come after other 
+in Fibonacci Sequence (0, 1, 1, 2, 3, 5, ..). For example, 3 and 5 are neighbours, but 2 and 5 are not.
+
+Given a number, find a representation of number as sum of non-consecutive Fibonacci numbers.
+
+Examples:
+
+Input:  n = 10
+Output: 8 2
+8 and 2 are two non-consecutive Fibonacci Numbers
+and sum of them is 10.
+
+Input:  n = 30
+Output: 21 8 1
+21, 8 and 1 are non-consecutive Fibonacci Numbers
+and sum of them is 30.
+
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int nearestSmallerEqFib(int n)
+{
+    if(n==0 || n==1)
+    return n;
+    
+    int f1=0,f2=1,f3=1;
+    while(f3<=n)
+    {
+        f1= f2;
+        f2 = f3;
+        f3 = f1+f2;
+    }
+    return f2;
+}
+
+int main()
+{
+    int n,r;
+    cin>>n;
+    r = nearestSmallerEqFib(n);
+    cout<<"\nFactors are : "<<r<<" "<<n-r<<endl;
+    return 0;
+}
