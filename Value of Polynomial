@@ -1,0 +1,80 @@
+/*
+
+Given a polynomial represented as poly[] of size n and a value x, compute value of the polynomial for given x.  The result should be computed
+under modulo 109+7. 
+
+Example 1:
+
+Input: n = 4, x = 3
+poly = {2, -6, 2, -1}
+Output: 5
+Explaination: Output is value of 2x3 - 6x2 + 
+2x - 1 for x = 3.
+Example 2:
+
+Input: n = 4, x = 2
+poly = {1, 2, 0, 4}
+Output: 20
+Explaination: Output is value of x3 + 2x2 + 4 
+for x = 2.
+
+*/
+
+//{ Driver Code Starts
+// Initila Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+
+    long long Pow(long long x, int n) {
+    long long res = 1;
+     while (n) {
+            if (n % 2) res = (res % 1000000007) * (x % 1000000007);
+            x *= x;
+            x %= 1000000007;
+            n /= 2;
+        }
+        return res%1000000007;
+    }
+
+
+    int value(int n, int poly[], int x){
+        // code here
+        long long res =0;
+        int p = n-1;
+        for(int i=0;i<n;i++)
+        {
+            res = res + poly[i]*(Pow(x,p-i));
+            res %= 1000000007;
+        }
+        return res%1000000007;
+        
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n, x;
+        cin>>n;
+        int poly[n];
+        for(int i = 0;i < n;i++)
+            cin>>poly[i];
+        cin>>x;
+        
+        Solution ob;
+        cout<<ob.value(n, poly, x)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
+
