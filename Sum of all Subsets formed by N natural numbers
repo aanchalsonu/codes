@@ -1,0 +1,67 @@
+/*
+
+Given a number N, the task is to find the sum of all the elements from all possible subsets of a set formed by first N natural numbers.
+
+Example 1:
+
+Input:
+N = 2
+Output:
+6
+Explanation:
+Possible subsets are {{1}, {2}, {1, 2}}.
+Sum of elements in the subsets is 
+1 + 2 + 1 + 2 = 6.
+Example 2:
+
+Input:
+N = 3
+Output:
+24
+Explanation:
+Possible subsets are 
+{{1},{2},{3},{1,2},{2,3},{1,3},{1,2,3}}.
+Sum of elements in the subsets is 
+1+2+3+1+2+2+3+1+3+1+2+3 = 24
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// } Driver Code Ends
+//User function Template for C++
+class Solution
+{
+public:
+    long long sumOfSubsets(int n)
+    {
+        // Write Your Code here
+        //THE idea is that every nnumber from 1 to n appears exactly 2^(n-1) times
+        //so the sum is sum of all these elements appearing 2^(n-1) times
+        
+        long long ans;
+        ans = (n*(n+1))/2;
+        ans = ans * pow(2,n-1);
+        return ans;
+        
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int N;
+        cin>>N;
+        Solution ob;
+        long long ans  = ob.sumOfSubsets(N);
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
