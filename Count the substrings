@@ -1,0 +1,47 @@
+/*
+
+Input:
+S = "gEEk"
+Output: 3
+Explanation: There are 3 substrings of
+the given string which satisfy the
+condition. They are "gE", "gEEk" and "Ek".
+
+Input:
+S = "WomensDAY"
+Output: 4
+Explanation: There are 4 substrings of 
+the given string which satisfy the
+condition. They are "Wo", "ensDAY", 
+"nsDA" and "sD"
+
+*/
+
+class Solution
+{
+    public:
+    int countSubstring(string S)
+    {
+        // code here
+        unordered_map<int,int> mp;
+        int ans=0;
+        int sum=0,i;
+        for(i=0;i<S.length();i++)
+        {
+            if(S[i] >= 'A' && S[i] <='Z')
+            sum++;
+            else
+            sum--;
+            
+            
+            if(sum==0)
+            ans++;
+            
+            if(mp.find(sum) != mp.end())
+            ans += mp[sum];
+            
+            mp[sum]++;
+        }
+        return ans;
+    }
+};
