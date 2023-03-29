@@ -1,0 +1,90 @@
+/*
+
+Given an integer n. Return the nth row of the following look-and-say pattern.
+1
+11
+21
+1211
+111221
+Look-and-Say Pattern:
+
+To generate a member of the sequence from the previous member, read off the digits of the previous member, counting the number of digits 
+in groups of the same digit. For example:
+
+1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+1211 is read off as "one 1, one 2, then two 1s" or 111221.
+111221 is read off as "three 1s, two 2s, then one 1" or 312211.
+Example 1:
+
+Input:
+n = 5
+Output: 111221
+Explanation: The 5th row of the given pattern
+will be 111221.
+Example 2:
+
+Input:
+n = 3
+Output: 21
+Explanation: The 3rd row of the given pattern
+will be 21.
+
+*/
+
+//{ Driver Code Starts
+//Initial template for C++
+
+#include<bits/stdc++.h> 
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution
+{
+  public:
+    string lookandsay(int n) {
+        // code here
+        int i,j;
+        string num= "1", temp = "";
+        if(n==1)
+        return num;
+        
+        int count=1;
+        
+        for(i=2;i<=n;i++)
+        {
+            temp="";
+            for(j=0;num[j] != '\0';)
+            {
+                while(num[j] == num[j+1])
+                {
+                    count++;
+                    j++;
+                }
+                temp += to_string(count) + num[j++];
+                count=1;
+            }
+            num=temp;
+        }
+        return num;
+        
+    }   
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        Solution obj;
+        cout<<obj.lookandsay(n)<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
