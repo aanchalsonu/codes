@@ -1,0 +1,102 @@
+/*
+
+Given a string str and a pattern pat. You need to check whether the pattern is present or not in the given string. 
+
+Example 1:-
+
+Input:
+
+2
+abcdefh
+bcd
+axzy
+xy
+
+Output:
+Present
+Not present
+ 
+
+Your task:
+You need to complete the function searchPattern() and you need to return a boolean value (True or False) according to the pattern present or not in the given string.
+
+
+*/
+
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+/*
+str: string in which pattern we have to find pattern.
+text: pattern needs to searched.
+*/
+
+bool searchPattern(string str, string pat)
+{
+    // your code here
+    int i,j,x;
+    for(i=0;i<str.length()-pat.length()+1;i++)
+    {
+        
+        for(j=0;j<pat.length();j++)
+        {
+            if(str[i+j] != pat[j])
+            break;
+            
+            if(j == (pat.length()-1))
+            return true;
+        }
+        
+        // x=0;
+        // if(str[i] == pat[0])
+        // {
+        //     for(j=1;j<=pat.length();j++)
+        //     {
+        //         if(str[++i] != pat[j])
+        //         break;
+                
+        //         x=1;
+        //     }
+        //     if(j == pat.length()-1)
+        //     return true;
+        // }
+        // if(x==1)
+        // {
+        //     x=0;
+        // }
+        // else
+        // i++;
+        
+    }
+    
+    return false;
+}
+
+
+
+//{ Driver Code Starts.
+int main()
+{
+    int t; cin>>t;
+    
+    while(t--)
+    {
+        string str, pat;
+        cin>>str;
+        cin>>pat;
+        
+        if(searchPattern(str, pat) == true)
+            cout << "Present" <<endl;
+        else cout << "Not present" <<endl;
+    }
+}
+
+
+// } Driver Code Ends
