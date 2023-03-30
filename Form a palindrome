@@ -1,0 +1,104 @@
+
+/*
+Given a string, find the minimum number of characters to be inserted to convert it to palindrome.
+For Example:
+ab: Number of insertions required is 1. bab or aba
+aa: Number of insertions required is 0. aa
+abcd: Number of insertions required is 3. dcbabcd
+
+
+Example 1:
+
+Input: str = "abcd"
+Output: 3
+Explanation: Inserted character marked
+with bold characters in dcbabcd
+Example 2:
+
+Input: str = "aa"
+Output: 0
+Explanation:"aa" is already a palindrome.
+
+*/
+
+
+//{ Driver Code Starts
+//Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution{
+  public:
+  
+    int solve(string str,int i,int j,vector<vector<int>> &dp)
+    {
+        if(i>=j)
+        return 0;
+        
+        int ans=0;
+        if(dp[i][j] != -1)
+        return dp[i][j];
+        
+        if(str[i] == str[j])
+        return solve(str,i+1,j-1,dp);
+        else
+        ans = 1 + min(solve(str,i,j-1,dp),solve(str,i+1,j,dp));
+        
+        return dp[i][j] = ans;
+        
+    }
+  
+  
+    int countMin(string str){
+    //complete the function here
+    
+    int i=0;
+    int n = str.length();
+    vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+    return solve(str,0,n-1,dp);
+    
+    
+    
+    
+    
+    // int i,j,lo,hi;
+    // int ans=0;
+    // lo = 0;
+    // hi = str.length()-1;
+    
+    // while(lo<hi)
+    // {
+    //     if(str[lo] != str[hi])
+    //     {
+    //         ans++;
+    //         lo++;
+    //     }
+    //     else if(str[lo] == str[hi])
+    //     {
+    //         lo++;
+    //         hi--;
+    //     }
+    // }
+    // return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        string str;
+        cin >> str;
+        Solution ob;
+        cout << ob.countMin(str) << endl;
+    }
+return 0;
+}
+
+
+// } Driver Code Ends
