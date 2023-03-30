@@ -1,0 +1,92 @@
+/*
+Given a sorted and rotated array A of N distinct elements which are rotated at some point, and given an element K. 
+The task is to find the index of the given element K in array A.
+
+Example 1:
+
+Input:
+N = 9
+A[] = {5,6,7,8,9,10,1,2,3}
+K = 10
+Output: 5
+Explanation: 10 is found at index 5.
+Example 1:
+
+Input:
+N = 3
+A[] = {3,1,2}
+K = 1
+Output: 1
+
+*/
+
+//{ Driver Code Starts
+//Initial template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int Search(vector<int> ,int );
+
+//User code will be pasted here
+
+int main(){
+
+    int t;
+    cin >> t;
+
+    while(t--){
+        int n;
+        cin >> n;
+        
+        vector<int> vec(n);
+        
+        for(int i =0;i<n;i++) 
+            cin >> vec[i];
+        
+        int target;
+        cin >> target;
+        
+        cout << Search(vec,target) << "\n";
+         
+    }
+}
+// } Driver Code Ends
+
+
+//User function template for C++
+
+// vec : given vector of elements
+// K : given value whose index we need to find 
+int Search(vector<int> a, int k) {
+    //code here
+    int lo,hi,mid;
+    
+    lo = 0;
+    hi = a.size()-1;
+    
+    //Binary search wala logic lagega buss kuch statements ka sath khelna hai loop ka andar
+   
+    while(lo <= hi)
+    {
+        mid = lo + (hi-lo)/2;
+        if(a[mid] == k)
+        return mid;
+        else if(a[mid] > a[lo])
+        {
+            //agar middle ka element bada hai lower index ke value sa tho iska matlab rotation ho sakta hai yaha pa uska liya ek cobdition check karna hai yaha pa
+            if(k < a[mid] && k>=a[lo]) // agar k ke value less hai middle sa aur greater hai lower index ke value sa tho high change hoga
+            hi = mid-1;
+            else // agar condition match nahi hue tho low change hoga
+            lo = mid+1;
+        }
+        else
+        {
+            if(k > a[mid] && k<=a[hi]) // agar k ke value badi hai mid sa but choti hai high sa tho normal binary search wala logic lagega 
+            lo = mid+1;
+            else // else high change hoga to mid-1
+            hi = mid-1;
+        }
+    }
+    return -1;
+}
