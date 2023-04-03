@@ -1,0 +1,172 @@
+/*
+
+Given a singly linked list, remove all the nodes which have a greater value on their right side.
+
+Example 1:
+
+Input:
+LinkedList = 12->15->10->11->5->6->2->3
+Output: 15 11 6 3
+Explanation: Since, 12, 10, 5 and 2 are
+the elements which have greater elements
+on the following nodes. So, after deleting
+them, the linked list would like be 15,
+11, 6, 3.
+Example 2:
+
+Input:
+LinkedList = 10->20->30->40->50->60
+Output: 60
+Your Task:
+The task is to complete the function compute() which should modify the list as required and return the head of the modified linked list.
+The printing is done by the driver code
+
+*/
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+
+
+void print(Node *root)
+{
+    Node *temp = root;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+
+
+
+// } Driver Code Ends
+/*
+
+The structure of linked list is the following
+
+struct Node
+{
+    int data;
+    Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+*/
+class Solution
+{
+    public:
+    Node *compute(Node *head)
+    {
+        
+        if(head->next == NULL)
+        return head;
+        
+        Node * temp = compute(head->next);
+        if(head->data >= temp->data)
+        {
+            head->next = temp;
+            return head;
+        }
+        else
+        return temp;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // your code goes here
+        // vector<int> v;
+        // Node * temp = head;
+        // Node * res = new Node(-1);
+        // Node * ans = res;
+        // while(temp != NULL)
+        // {
+        //     v.push_back(temp->data);
+        //     temp = temp->next;
+        // }
+        // vector<int> t;
+        // for(int i=0;i<v.size()-1;)
+        // {
+        //     if(v[i+1] > v[i])
+        //     {
+        //         t.push_back(v[i+1]);
+        //         i = i+2;
+        //     }
+        //     else
+        //     {
+        //         t.push_back(v[i]);
+        //         i++;
+        //     }
+        // }
+        
+        // for(int i=0;i<t.size();i++)
+        // {
+        //     Node * curr = new Node(t[i]);
+        //     ans->next = curr;
+        //     ans = ans->next;
+        // }
+        // return res->next;
+        
+        
+        
+    }
+    
+};
+   
+
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int T;
+	cin>>T;
+
+	while(T--)
+	{
+		int K;
+		cin>>K;
+		struct Node *head = NULL;
+        struct Node *temp = head;
+
+		for(int i=0;i<K;i++){
+		    int data;
+		    cin>>data;
+			if(head==NULL)
+			    head=temp=new Node(data);
+			else
+			{
+				temp->next = new Node(data);
+				temp = temp->next;
+			}
+		}
+        Solution ob;
+        Node *result = ob.compute(head);
+        print(result);
+        cout<<endl;
+    }
+}
+
+// } Driver Code Ends
