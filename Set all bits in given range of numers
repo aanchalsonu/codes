@@ -1,0 +1,63 @@
+/*
+
+Given a non-negative number N and two values L and R. The problem is to set all the bits in the range L to R in the binary representation of N.
+
+Example 1:
+
+Input :
+N = 17, L = 2, R = 3 
+Output :
+23
+Explanation:
+(17)10 = (10001)2
+(23)10 = (10111)2
+The bits in the range 2 to 3 in the binary
+representation of 17 are set.
+Example 2:
+
+Input :
+N = 8, L = 1, R = 2 
+Output :
+11
+Explanation:
+(8)10 = (1000)2
+(11)10 = (1011)2
+The bits in the range 2 to 3 in the binary
+representation of 8 are set.
+
+*/
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+    int setAllRangeBits(int N , int L , int R) {
+        // code here
+        int mask;
+        //phela lse lekar r  tak bits set karo and i ko 1 set kardo then or the result with previous value of n
+        for(int i = L; i<= R; i++) {
+            mask = 1<<i-1;
+            N = N | mask;
+        }
+        return N;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N,L,R;
+        
+        cin>>N>>L>>R;
+
+        Solution ob;
+        cout << ob.setAllRangeBits(N,L,R) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
