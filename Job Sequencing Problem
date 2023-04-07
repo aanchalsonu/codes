@@ -1,0 +1,145 @@
+/*
+Given a set of N jobs where each jobi has a deadline and profit associated with it.
+
+Each job takes 1 unit of time to complete and only one job can be scheduled at a time. We earn the profit associated with job if 
+and only if the job is completed by its deadline.
+
+Find the number of jobs done and the maximum profit.
+
+Note: Jobs will be given in the form (Jobid, Deadline, Profit) associated with that Job.
+
+
+Example 1:
+
+Input:
+N = 4
+Jobs = {(1,4,20),(2,1,10),(3,1,40),(4,1,30)}
+Output:
+2 60
+Explanation:
+Job1 and Job3 can be done with
+maximum profit of 60 (20+40).
+Example 2:
+
+Input:
+N = 5
+Jobs = {(1,2,100),(2,1,19),(3,2,27),
+        (4,1,25),(5,1,15)}
+Output:
+2 127
+Explanation:
+2 jobs can be done with
+maximum profit of 127 (100+27).
+
+Your Task :
+You don't need to read input or print anything. Your task is to complete the function JobScheduling() which takes an integer N and an
+array of Jobs(Job id, Deadline, Profit) as input and returns the count of jobs and maximum profit as a list or vector of 2 elements.
+
+*/
+
+//{ Driver Code Starts
+// Program to find the maximum profit job sequence from a given array 
+// of jobs with deadlines and profits 
+#include<bits/stdc++.h>
+using namespace std; 
+
+// A structure to represent a job 
+struct Job 
+{ 
+    int id;	 // Job Id 
+    int dead; // Deadline of job 
+    int profit; // Profit if job is over before or on deadline 
+}; 
+
+
+// } Driver Code Ends
+/*
+struct Job 
+{ 
+    int id;	 // Job Id 
+    int dead; // Deadline of job 
+    int profit; // Profit if job is over before or on deadline 
+};
+*/
+
+class Solution 
+{
+    public:
+    static bool cmp(Job a,Job b)
+    {
+        return a.profit>b.profit;
+    }
+    //Function to find the maximum profit and the number of jobs done.
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        // your code here
+        
+        //phela sort karo array ko in decending order of profit 
+        sort(arr,arr+n,cmp);
+        
+        //initially sabhi time slots free hai 
+        bool slots[n];
+        int results[n] ={0};
+        for(int i=0;i<n;i++)
+        slots[i] = false;
+        
+        vector<int> res; // to store result
+        int sum=0,count=0;
+        // array decending order mai hai tho usko fill karo slots mai last sa ie:maximum 
+        //profit wala job will be done first
+        for(int i=0;i<n;i++)
+        {
+            for(int j=min(n,arr[i].dead)-1;j>=0;j--)
+            {
+                if(slots[j] == false)
+                {
+                    //yaha count the number of jobs that can be done and profit that will be obtained 
+                    sum = sum +  arr[i].profit;
+                    slots[j] = true;
+                    results[j] = i;
+                    count++;
+                    break;
+                }
+            }
+        }
+        res.push_back(count);
+        res.push_back(sum);
+        return res;
+        
+    } 
+};
+
+//{ Driver Code Starts.
+// Driver program to test methods 
+int main() 
+{ 
+    int t;
+    //testcases
+    cin >> t;
+    
+    while(t--){
+        int n;
+        
+        //size of array
+        cin >> n;
+        Job arr[n];
+        
+        //adding id, deadline, profit
+        for(int i = 0;i<n;i++){
+                int x, y, z;
+                cin >> x >> y >> z;
+                arr[i].id = x;
+                arr[i].dead = y;
+                arr[i].profit = z;
+        }
+        Solution ob;
+        //function call
+        vector<int> ans = ob.JobScheduling(arr, n);
+        cout<<ans[0]<<" "<<ans[1]<<endl;
+    }
+	return 0; 
+}
+
+
+
+// } Driver Code Ends
